@@ -1,4 +1,4 @@
-package Model;
+package Planner;
 
 public class Member {
 
