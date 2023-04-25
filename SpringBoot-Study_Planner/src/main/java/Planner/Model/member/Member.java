@@ -4,6 +4,8 @@ import java.util.Date;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class Member {
 	private String member_type;
@@ -11,6 +13,6 @@ public class Member {
 	private String password;
 	private String nickname;
 	private String email;
-	private Date create_time;
+	private LocalDate create_time;
 	
 }
