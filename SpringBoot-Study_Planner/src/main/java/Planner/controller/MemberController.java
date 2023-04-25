@@ -9,14 +9,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import Planner.Model.member.LoginForm;
 import Planner.Model.member.Member;
 import Planner.Model.member.RegisterForm;
+import Planner.repository.MemberMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("member")
 @Controller
 public class MemberController {
+	
+	private final MemberMapper memberMapper;
+	
 	@GetMapping("login")	// 로그인
 	public String login(Model model) {
 		model.addAttribute("loginForm", new LoginForm());
@@ -25,6 +35,7 @@ public class MemberController {
 	
 	@PostMapping("login")
 	public String login(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
+		Member member = memberMapper.findMember(loginForm.getMember_id());
 		return "redirect:/";
 	}
 	
