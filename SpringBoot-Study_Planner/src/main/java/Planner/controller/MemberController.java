@@ -34,7 +34,7 @@ public class MemberController {
 	
 	@GetMapping("register")		// 회원가입
 	public String register(Model model) {
-//		model.addAttribute("registerForm", new RegisterForm());
+//		model.addAttribute("registerForm", new RegisterForm());	
 		return "register";
 	}
 	
