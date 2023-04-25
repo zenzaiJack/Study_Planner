@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
-public class JoinForm {
+public class RegisterForm {
 	private String member_type;
 	@Size(min = 4, max = 12)		// id는 4 ~ 12를 만족해야 함
 	private String member_id;
@@ -30,13 +30,13 @@ public class JoinForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate create_time;
 	
-	public static Member toMember(JoinForm joinForm) {
+	public static Member toMember(RegisterForm registerForm) {
 		Member member = new Member();
-		member.setMember_id(joinForm.getMember_id());
-		member.setPassword(joinForm.getPassword());
-		member.setNickname(joinForm.getNickname());
-		member.setEmail(joinForm.getEmail());
-		member.setCreate_time(joinForm.getCreate_time());
+		member.setMember_id(registerForm.getMember_id());
+		member.setPassword(registerForm.getPassword());
+		member.setNickname(registerForm.getNickname());
+		member.setEmail(registerForm.getEmail());
+		member.setCreate_time(registerForm.getCreate_time());
 		return member;
 	}
 }
