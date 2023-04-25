@@ -27,7 +27,7 @@ public class MemberController {
 //	}
 	
 	//일단 지금은 사용하지 않을 예정입니다.
-	@GetMapping("forget-password")	// 비밀번호 찾기
+	@GetMapping("forgot-password")	// 비밀번호 찾기
 	public String forgotPassword(Model model) {
 		return "forgot-password";
 	}
