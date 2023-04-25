@@ -11,20 +11,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import Planner.Model.member.LoginForm;
 import Planner.Model.member.Member;
+import Planner.Model.member.RegisterForm;
 
 @Controller
 public class MemberController {
 	@GetMapping("login")	// 로그인
 	public String login(Model model) {
-//		model.addAttribute("loginForm", new LoginForm());
+		model.addAttribute("loginForm", new LoginForm());
 		return "login";
 	}
 	
 	@PostMapping("login")
-//	public String login(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
-		
-//	}
+	public String login(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
+		return "redirect:/";
+	}
 	
 	//일단 지금은 사용하지 않을 예정입니다.
 	@GetMapping("forgot-password")	// 비밀번호 찾기
@@ -34,17 +36,17 @@ public class MemberController {
 	
 	@GetMapping("register")		// 회원가입
 	public String register(Model model) {
-//		model.addAttribute("registerForm", new RegisterForm());
+		model.addAttribute("registerForm", new RegisterForm());	
 		return "register";
 	}
 	
-//	@PostMapping("register")
-//	public String register(@ModelAttribute("registerForm") RegisterForm registerForm,
-//						   BindingResult result) {
-//		
-//	}
+	@PostMapping("register")
+	public String register(@ModelAttribute("registerForm") RegisterForm registerForm,
+						   BindingResult result) {
+		return "redirct:/";
+	}
 	
-	@GetMapping("logout")
+	@GetMapping("logout")  // 로그아웃
 	public String register(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if(session != null) {
