@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import Planner.Model.Member;
+import Planner.Model.member.Member;
 
 @Controller
 public class MemberController {
-	@GetMapping("login")
+	@GetMapping("login")	// 로그인
 	public String login(Model model) {
 //		model.addAttribute("loginForm", new LoginForm());
 		return "login";
@@ -27,12 +27,12 @@ public class MemberController {
 //	}
 	
 	//일단 지금은 사용하지 않을 예정입니다.
-	@GetMapping("forget-password")
+	@GetMapping("forget-password")	// 비밀번호 찾기
 	public String forgotPassword(Model model) {
 		return "forgot-password";
 	}
 	
-	@GetMapping("register")
+	@GetMapping("register")		// 회원가입
 	public String register(Model model) {
 //		model.addAttribute("registerForm", new RegisterForm());
 		return "register";

@@ -1,4 +1,4 @@
-package Planner.Model;
+package Planner.Model.member;
 
 import java.util.Date;
 
@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class Member {
+	private String member_type;
 	private String member_id;
 	private String password;
 	private String nickname;
