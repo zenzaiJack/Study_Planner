@@ -6,19 +6,20 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import Planner.intercepter.LoginCheckIntercepter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 	
     private String[] excludePaths = {"forgot-password", "/register", "/login", "/logout", 
     								"/css/**",  "/js/**", "/scss/**", "/vendor/**","/*.ico", "/error"};
 
-	public void addIntercepters(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginCheckIntercepter())
-				.order(1)
-				.addPathPatterns("/**")
-				.excludePathPatterns(excludePaths);
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+    	// TODO Auto-generated method stub
+    	registry.addInterceptor(new LoginCheckIntercepter()).order(1).addPathPatterns("/**").excludePathPatterns(excludePaths);
+    }
 	
 	
 }

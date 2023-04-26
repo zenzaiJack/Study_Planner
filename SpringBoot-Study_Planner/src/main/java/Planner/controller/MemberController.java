@@ -1,6 +1,7 @@
 package Planner.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import Planner.Model.member.LoginForm;
@@ -34,9 +36,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("login")
-	public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, 
-						BindingResult result,
-						HttpServletRequest request) {
+	public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, Model model,
+						HttpServletResponse response, HttpServletRequest request, BindingResult result,
+						@RequestParam(defaultValue = "/") String redirectURL) {
 		if (result.hasErrors()) {
 			return "member/LoginForm";
 		}
@@ -68,13 +70,14 @@ public class MemberController {
 	@PostMapping("register")
 	public String register(@Validated @ModelAttribute("registerForm") RegisterForm registerForm,
 						   BindingResult result) {
-		if(memberMapper.findMember(registerForm.getMember_id()) == null) {
+		if(memberMapper.findMember(registerForm.getMember_id()) != null) {
 			result.reject("duplicate ID", "이미 가입된 아이디 입니다.");
 			return "register";
 			
 		}
+		log.info("register() 실행");
 		memberMapper.saveMember(registerForm.toMember(registerForm));
-		return "redirct:/";
+		return "redirct:/index";
 	}
 	
 	@GetMapping("logout")  // 로그아웃
