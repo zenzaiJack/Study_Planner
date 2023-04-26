@@ -8,12 +8,14 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import org.springframework.boot.convert.DataSizeUnit;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
+
 
 @Data
 public class RegisterForm {
