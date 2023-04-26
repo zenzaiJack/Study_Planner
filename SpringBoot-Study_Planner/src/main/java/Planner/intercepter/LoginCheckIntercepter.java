@@ -1,11 +1,9 @@
 package Planner.intercepter;
 
 import java.util.Enumeration;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.web.servlet.HandlerInterceptor;
 
 public class LoginCheckIntercepter implements HandlerInterceptor{
@@ -24,7 +22,7 @@ public class LoginCheckIntercepter implements HandlerInterceptor{
             }
 
             // 로그인 페이지로 리다이렉트
-            response.sendRedirect("/member/login?redirectURL=" + requestURI + "?" + stringBuffer.toString());
+            response.sendRedirect("/login?redirectURL=" + requestURI + "?" + stringBuffer.toString());
             return false;
         }
         return true;
