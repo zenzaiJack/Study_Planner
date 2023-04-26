@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("login")
-	public String login(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
+	public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
 		Member member = memberMapper.findMember(loginForm.getMember_id());
 		return "redirect:/";
 	}
@@ -53,6 +54,9 @@ public class MemberController {
 	@PostMapping("register")
 	public String register(@ModelAttribute("registerForm") RegisterForm registerForm,
 						   BindingResult result) {
+		if(memberMapper.findMember(registerForm.getMember_id()) == null) {
+			
+		}
 		return "redirct:/";
 	}
 	
