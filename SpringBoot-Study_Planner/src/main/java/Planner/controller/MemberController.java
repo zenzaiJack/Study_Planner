@@ -34,8 +34,22 @@ public class MemberController {
 	}
 	
 	@PostMapping("login")
-	public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
+	public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, 
+						BindingResult result,
+						HttpServletRequest request) {
+		if (result.hasErrors()) {
+			return "member/LoginForm";
+		}
+		
 		Member member = memberMapper.findMember(loginForm.getMember_id());
+		// 아이디 or 비밀번호 틀렸을시 로그인폼으로 돌아감
+		if (member == null || !member.getPassword().equals(loginForm.getPassword())) {
+			result.reject("loginError", "아이디가 없거나 패스워드가 다릅니다.");
+			return "login";
+		}
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("loginMember", member);			
 		return "redirect:/";
 	}
 	
@@ -52,11 +66,14 @@ public class MemberController {
 	}
 	
 	@PostMapping("register")
-	public String register(@ModelAttribute("registerForm") RegisterForm registerForm,
+	public String register(@Validated @ModelAttribute("registerForm") RegisterForm registerForm,
 						   BindingResult result) {
 		if(memberMapper.findMember(registerForm.getMember_id()) == null) {
+			result.reject("duplicate ID", "이미 가입된 아이디 입니다.");
+			return "register";
 			
 		}
+		memberMapper.saveMember(registerForm.toMember(registerForm));
 		return "redirct:/";
 	}
 	
