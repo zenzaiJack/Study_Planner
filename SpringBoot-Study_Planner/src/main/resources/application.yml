@@ -6,10 +6,10 @@ server:
 
 spring:
   datasource:
-    url: 211.38.173.250:1521:xe
+    url: jdbc:oracle:thin:@211.38.173.250:1521:xe
     username: study_planner
     password: 1234
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    driver-class-name: oracle.jdbc.OracleDriver
 
 mybatis:
   type-aliases-package: Planner.model
