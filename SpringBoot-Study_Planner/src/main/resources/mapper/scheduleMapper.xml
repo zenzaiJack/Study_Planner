@@ -4,7 +4,11 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Planner.repository.ScheduleMapper">
         <insert id="saveSchedule">
+        <selectKey keyProperty="schedule_num" resultType="long" order="BEFORE">
+        	select seq_schedule.nextval from dual
+        </selectKey>
     insert into member (
+    		schedule_num,
         	member_id,
             title,
             start_date,
@@ -13,6 +17,7 @@
             end_time
             
         ) values (
+        	#{schedule_num},
         	#{member_id},
             #{title},
             #{start_date},
