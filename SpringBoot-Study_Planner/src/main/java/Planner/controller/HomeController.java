@@ -14,9 +14,9 @@ import Planner.Model.member.Member;
 @Controller
 public class HomeController {
 	
-	@GetMapping("/")
-	public String index(@SessionAttribute(name = "loginMember", required = false) Member loginMember
-						) {
-		return "/";
-	}
+//	@GetMapping("/")
+//	public String index(@SessionAttribute(name = "loginMember", required = false) Member loginMember
+//						) {
+//		return "/";
+//	}
 }
