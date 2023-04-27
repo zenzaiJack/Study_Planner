@@ -77,7 +77,7 @@ public class MemberController {
 		}
 		log.info("register() 실행");
 		memberMapper.saveMember(registerForm.toMember(registerForm));
-		return "redirct:/";
+		return "login";
 	}
 	
 	@GetMapping("logout")  // 로그아웃
