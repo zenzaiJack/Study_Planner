@@ -25,4 +25,24 @@
     <select id="findMember" resultType="member">
         select * from member where member_id = #{member_id}
     </select>
+    
+    <insert id="saveSchedule">
+    insert into member (
+        	member_id,
+            title,
+            start_date,
+            end_date,
+            start_time,
+            end_time,
+            email
+        ) values (
+        	#{member_id},
+            #{title},
+            #{start_date},
+            #{end_date},
+            #{start_time},
+            #{end_time},
+            #{email}
+        )
+    </insert>
 </mapper>
