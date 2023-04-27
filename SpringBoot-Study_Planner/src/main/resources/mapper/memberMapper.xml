@@ -26,23 +26,4 @@
         select * from member where member_id = #{member_id}
     </select>
     
-    <insert id="saveSchedule">
-    insert into member (
-        	member_id,
-            title,
-            start_date,
-            end_date,
-            start_time,
-            end_time
-            
-        ) values (
-        	#{member_id},
-            #{title},
-            #{start_date},
-            #{end_date},
-            #{start_time},
-            #{end_time}
-           
-        )
-    </insert>
 </mapper>
