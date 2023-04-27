@@ -4,16 +4,21 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Planner.repository.MemberMapper">
     <insert id="saveMember">
+    	<selectKey keyProperty="member_num" resultType="long" order="BEFORE">
+            select seq_member.nextval from dual
+        </selectKey>
         insert into member (
+        	member_num,
             member_id,
             password,
             nickname,
-            email,
+            email
         ) values (
+        	#{member_num},
             #{member_id},
             #{password},
             #{nickname},
-            #{email},
+            #{email}
         )
     </insert>
 

@@ -19,7 +19,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class RegisterForm {
-	private String member_type;
 	@Size(min = 4, max = 12)		// id는 4 ~ 12를 만족해야 함
 	private String member_id;
 	@Size(min = 6, max = 20)		// pw는 6 ~ 20를 만족해야 함
@@ -38,7 +37,6 @@ public class RegisterForm {
 		member.setPassword(registerForm.getPassword());
 		member.setNickname(registerForm.getNickname());
 		member.setEmail(registerForm.getEmail());
-		member.setCreate_time(registerForm.getCreate_time());
 		return member;
 	}
 }
