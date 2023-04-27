@@ -41,6 +41,11 @@ public class ScheduleController {
 		model.addAttribute("month", new ScheduleWriteForm());	
 		return "schedule/month";
 	}
+	@GetMapping("week")		
+	public String week(Model model) {
+		model.addAttribute("month", new ScheduleWriteForm());	
+		return "schedule/week";
+	}
 	
 	
 }
