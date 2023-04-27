@@ -33,16 +33,16 @@
             start_date,
             end_date,
             start_time,
-            end_time,
-            email
+            end_time
+            
         ) values (
         	#{member_id},
             #{title},
             #{start_date},
             #{end_date},
             #{start_time},
-            #{end_time},
-            #{email}
+            #{end_time}
+           
         )
     </insert>
 </mapper>
