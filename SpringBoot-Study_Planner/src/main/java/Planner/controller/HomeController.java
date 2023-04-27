@@ -11,8 +11,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import Planner.Model.member.Member;
 
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class HomeController {
+	 
+
+
 	
 //	@GetMapping("/")
 //	public String index(@SessionAttribute(name = "loginMember", required = false) Member loginMember
@@ -20,3 +27,4 @@ public class HomeController {
 //		return "/";
 //	}
 }
+
