@@ -28,11 +28,16 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
+$.ajax({
+    url: "/chart-data",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: [],
+    labels: data.labels,
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
@@ -46,7 +51,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [],
+       data: data.data,
     }],
   },
   options: {
@@ -78,7 +83,7 @@ var myLineChart = new Chart(ctx, {
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return number_format(value) + 'hour' ;
           }
         },
         gridLines: {
@@ -115,4 +120,6 @@ var myLineChart = new Chart(ctx, {
       }
     }
   }
+});
+    }
 });
