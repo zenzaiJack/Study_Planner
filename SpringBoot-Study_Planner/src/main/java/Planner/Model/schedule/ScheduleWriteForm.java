@@ -13,9 +13,9 @@ import lombok.Data;
 @Data
 public class ScheduleWriteForm {
 	private String title;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime start_date;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime end_date;
 	private LocalDateTime start_time;
 	private LocalDateTime end_time;
