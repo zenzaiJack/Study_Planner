@@ -13,16 +13,20 @@ import lombok.Data;
 @Data
 public class ScheduleWriteForm {
 	private String title;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private String subject;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime start_date;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime end_date;
+	@DateTimeFormat(pattern = "aa hh:mm")
 	private LocalDateTime start_time;
+	@DateTimeFormat(pattern = "aa hh:mm")
 	private LocalDateTime end_time;
 	
 	public static Schedule toSchedule(ScheduleWriteForm scheduleWriteForm) {
 		Schedule schedule = new Schedule();
 		schedule.setTitle(scheduleWriteForm.getTitle());
+		schedule.setSubject(scheduleWriteForm.getSubject());
 		schedule.setStart_date(scheduleWriteForm.getStart_date());
 		schedule.setEnd_date(scheduleWriteForm.getEnd_date());
 		schedule.setStart_time(scheduleWriteForm.getStart_time());
