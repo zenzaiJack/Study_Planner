@@ -7,7 +7,7 @@
         <selectKey keyProperty="schedule_num" resultType="long" order="BEFORE">
         	select seq_schedule.nextval from dual
         </selectKey>
-    insert into member (
+    insert into schedule (
     		schedule_num,
         	member_id,
             title,
