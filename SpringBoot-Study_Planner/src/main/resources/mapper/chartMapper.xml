@@ -5,7 +5,7 @@
 <mapper namespace="Planner.repository.TimerMapper">
     <insert id="timer">
     	<selectKey keyProperty="member_num" resultType="long" order="BEFORE">
-            select seq_member.nextval from dual
+            select seq_timer.nextval from dual
         </selectKey>
         insert into timer (
         	timer_num,
@@ -20,7 +20,12 @@
         )
      </insert>
      
-     <select id ="personStudy" resultType="timer">
+     <select id ="personStudy" resultType="Timer">
      	select * from timer where member_id = #{member_id}
+     </select>
+     
+     <select id ="selectTimersByMemberId" resultType="Timer">
+		SELECT study_date, study_time FROM timer where member_id = #{member_id}
+     	order by study_date
      </select>
 </mapper>
