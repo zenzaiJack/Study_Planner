@@ -20,9 +20,9 @@ public class ScheduleWriteForm {
 	private LocalDateTime start_date;
 	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime end_date;
-	 @DateTimeFormat(pattern = "aa hh:mm")
+	 @DateTimeFormat(pattern = "a hh:mm")
 	private LocalDateTime start_time;
-	 @DateTimeFormat(pattern = "aa hh:mm")
+	 @DateTimeFormat(pattern = "a hh:mm")
 	private LocalDateTime end_time;
 	
 	public static Schedule toSchedule(ScheduleWriteForm scheduleWriteForm) {
