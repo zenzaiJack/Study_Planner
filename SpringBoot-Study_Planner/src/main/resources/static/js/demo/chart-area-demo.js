@@ -39,7 +39,7 @@ $.ajax({
   data: {
     labels: data.labels,
     datasets: [{
-      label: "Earnings",
+      label: "Study Time",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
       borderColor: "rgba(78, 115, 223, 1)",
@@ -115,7 +115,7 @@ $.ajax({
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + 'hour';
         }
       }
     }
