@@ -60,8 +60,8 @@
                                 //내용 입력 여부 확인
                                 if(content == null || content == ""){
                                     alert("내용을 입력하세요.");
-                                }else if(start_date == "" || end_date ==""){
-                                    alert("날짜를 입력하세요.");
+                                }else if(subject == null || subject == ""){
+                                    alert("내용을 입력하세요.");
                                 }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
                                     alert("종료일이 시작일보다 먼저입니다.");
                                 }else if(start_time == "" || end_time ==""){
@@ -69,6 +69,7 @@
                                 }else{ // 정상적인 입력 시
                                     var obj = {
                                         "title" : content,
+                                        "subject" : subject,
                                         "start_d" : start_date,
                                         "end_d" : end_date,
                                         "start_t" : start_time,
@@ -301,6 +302,8 @@
 								<div class="form-group">
 									<label for="taskId" class="col-form-label">일정 내용</label> 
 									<input type="text" class="form-control" id="calendar_content" name="calendar_content"> 
+									<label for="taskId" class="col-form-label">과목</label> 
+									<input type="text" class="form-control" id="calendar_subject" name="calendar_subject"> 
 									<label for="taskId" class="col-form-label">시작 날짜</label> 
 									<input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date"> 
 									<label for="taskId" class="col-form-label">종료 날짜</label> 
