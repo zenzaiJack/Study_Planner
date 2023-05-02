@@ -14,4 +14,5 @@ public interface ScheduleMapper {
 	public void saveSchedule(Schedule schdule);
 	public Schedule findSchedule(String member_id);
 	List<Schedule> findfindSchedules(Schedule schedule);
+	
 }

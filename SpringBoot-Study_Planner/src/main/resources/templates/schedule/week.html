@@ -39,6 +39,7 @@
                 events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
                     {
                         title:'일정',
+                        subject:'과목',
                         start:'2023-04-01 00:00:00',
                         end:'2023-04-03 24:00:00' 
                     }
@@ -52,6 +53,7 @@
                             
                             $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
                                 var content = $("#calendar_content").val();
+                                var subject = $("#calendar_subject").val();
                                 var start_date = $("#calendar_start_date").val();
                                 var end_date = $("#calendar_end_date").val();
                                 var start_time = $("#calendar_start_time").val();
@@ -60,8 +62,8 @@
                                 //내용 입력 여부 확인
                                 if(content == null || content == ""){
                                     alert("내용을 입력하세요.");
-                                }else if(start_date == "" || end_date ==""){
-                                    alert("날짜를 입력하세요.");
+                                }else if(subject == null || subject == ""){
+                                    alert("내용을 입력하세요.");
                                 }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
                                     alert("종료일이 시작일보다 먼저입니다.");
                                 }else if(start_time == "" || end_time ==""){
@@ -69,6 +71,7 @@
                                 }else{ // 정상적인 입력 시
                                     var obj = {
                                         "title" : content,
+                                        "subject" : subject,
                                         "start_d" : start_date,
                                         "end_d" : end_date,
                                         "start_t" : start_time,
@@ -118,7 +121,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -136,7 +139,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Schedule</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -301,6 +304,8 @@
 								<div class="form-group">
 									<label for="taskId" class="col-form-label">일정 내용</label> 
 									<input type="text" class="form-control" id="calendar_content" name="calendar_content"> 
+									<label for="taskId" class="col-form-label">과목</label> 
+									<input type="text" class="form-control" id="calendar_subject" name="calendar_subject"> 
 									<label for="taskId" class="col-form-label">시작 날짜</label> 
 									<input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date"> 
 									<label for="taskId" class="col-form-label">종료 날짜</label> 
