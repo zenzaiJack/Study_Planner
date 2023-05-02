@@ -31,7 +31,7 @@ public class ChartController {
 	        // DB에서 가져온 Timer 객체를 이용해 labels와 values 리스트에 데이터 추가
 	        for (int i = timers.size() - 1; i >= 0 && i >= timers.size() - 7; i--) {
 	            Timer timer = timers.get(i);
-	            labels.add(0, timer.getStudy_date()); // 역순으로 추가
+	            labels.add(0, timer.getStudy_date().substring(0,12)); // 역순으로 추가
 	            values.add(0, (int) timer.getStudy_time()); // 역순으로 추가
 	        }
 
