@@ -43,21 +43,6 @@ public class ScheduleController {
 	}
 	
 	
-	@PostMapping("month")
-    public String join(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
-    					@Validated @ModelAttribute("schedule") Schedule schedule,
-                       BindingResult result) {
-        log.info("schedule: {}", schedule);
-
-        // validation 에 에러가 있으면 가입시키지 않고 member/joinForm.html 페이지로 돌아간다.
-        if (result.hasErrors()) {
-            return "schedule/month";
-        }
-        // 사용자로부터 입력받은 아이디로 데이터베이스에서 Member 를 검색한다.
-//        Member member = memberMapper.findMember(joinForm.getMember_id());
-        // 메인 페이지로 리다이렉트한다.
-        return "schedule/month";
-    }
 	@GetMapping("week")		
 	public String week(Model model) {
 		model.addAttribute("month", new ScheduleWriteForm());	
