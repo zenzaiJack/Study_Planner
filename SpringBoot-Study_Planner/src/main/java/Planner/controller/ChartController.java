@@ -49,8 +49,8 @@ public class ChartController {
 	        List<Timer> pies = timerMapper.selectSubjectByMemberId("user1");
 
 	        for (Timer pie : pies) {
-	            subject.add(pie.getSubject_name()); // 차트의 라벨 데이터
-	            time.add((int)pie.getStudy_time_sum()); // 차트의 값 데이터
+	            subject.add(pie.getSubject_name()); // 과목 이름 받아오기
+	            time.add((int)pie.getStudy_time_sum()); // 공부 시간 받아오기
 	        }
 	        
 	        data.put("subject", subject);
