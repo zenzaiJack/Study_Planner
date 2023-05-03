@@ -12,7 +12,5 @@ public class Schedule {
 	private String subject;
 	private LocalDateTime start_date;
 	private LocalDateTime end_date;
-	private LocalDateTime start_time;
-	private LocalDateTime end_time;
 
 }
