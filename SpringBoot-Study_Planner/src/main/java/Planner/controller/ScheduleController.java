@@ -37,15 +37,38 @@ public class ScheduleController {
 	
 	private final ScheduleMapper scheduleMapper;
 	@GetMapping("month")		
-	public String month(Model model) {
+	public String monthForm(Model model) {
 		model.addAttribute("month", new ScheduleWriteForm());	
 		return "schedule/month";
 	}
+	
+	
 	@GetMapping("week")		
-	public String week(Model model) {
-		model.addAttribute("month", new ScheduleWriteForm());	
+	public String weekForm(Model model) {
+		model.addAttribute("week", new ScheduleWriteForm());	
 		return "schedule/week";
 	}
 	
+	@PostMapping("week")
+	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+            @Validated @ModelAttribute("writeForm")ScheduleWriteForm scheduleWriteForm,
+            BindingResult result) {
+		 // 로그인 상태가 아니면 로그인 페이지로 보낸다.
+        if (loginMember == null) {
+            return "redirect:/member/login";
+        }
+
+        log.info("week: {}", scheduleWriteForm);
+        // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
+        if (result.hasErrors()) {
+            return "schedule/week";
+        }
+        
+        Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
+        schedule.setMember_id(loginMember.getMember_id());
+        scheduleMapper.saveSchedule(schedule);
+		return "schedule/week";
+	}
+
 	
 }

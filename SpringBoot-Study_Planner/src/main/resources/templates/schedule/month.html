@@ -24,7 +24,14 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
-	<script type="text/javascript">
+<!-- fullcalendar -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+
+
+<script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -33,6 +40,7 @@
                 events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
                     {
                         title:'일정',
+                        subject:'과목',
                         start:'2023-04-01 00:00:00',
                         end:'2023-04-03 24:00:00' 
                     }
@@ -46,6 +54,7 @@
                             
                             $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
                                 var content = $("#calendar_content").val();
+                                var subject = $("#calendar_subject").val();
                                 var start_date = $("#calendar_start_date").val();
                                 var end_date = $("#calendar_end_date").val();
                                 var start_time = $("#calendar_start_time").val();
@@ -53,6 +62,8 @@
                                 
                                 //내용 입력 여부 확인
                                 if(content == null || content == ""){
+                                    alert("내용을 입력하세요.");
+                                }else if(subject == null || subject == ""){
                                     alert("내용을 입력하세요.");
                                 }else if(start_date == "" || end_date ==""){
                                     alert("날짜를 입력하세요.");
@@ -63,6 +74,7 @@
                                 }else{ // 정상적인 입력 시
                                     var obj = {
                                         "title" : content,
+                                        "subject" : subject,
                                         "start_d" : start_date,
                                         "end_d" : end_date,
                                         "start_t" : start_time,
@@ -82,12 +94,12 @@
             calendar.render();
         });
     </script>
-    <style>
-		#calendarBox {
-		width: 65%;
-		padding-left: 2%;
-		}
-	</style>
+<style>
+#calendarBox {
+	width: 65%;
+	padding-left: 2%;
+}
+</style>
 </head>
 <body id="page-top">
 
@@ -110,7 +122,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="/index">
+                <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -263,7 +275,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Month</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -276,37 +288,65 @@
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-								
-								
-								
+
                         <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
             </div>
             <!-- End of Main Content -->
 			
-            <!-- Footer -->
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+<!-- 캘린더 밑에 넣고 싶을때!!! -->
+				<div id="calendarBox">
+					<div id="calendar"></div>
+				</div>
+
+				<!-- modal 추가 -->
+				<div class="modal fade" id="calendarModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="taskId" class="col-form-label">일정 내용</label> 
+									<input type="text" class="form-control" id="calendar_content" name="calendar_content"> 
+									<label for="taskId" class="col-form-label">과목</label> 
+									<input type="text" class="form-control" id="calendar_subject" name="calendar_subject"> 
+									<label for="taskId" class="col-form-label">시작 날짜</label> 
+									<input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date"> 
+									<label for="taskId" class="col-form-label">종료 날짜</label> 
+									<input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date"> 
+									<label for="taskId" class="col-form-label">시작 시간</label> 
+									<input type="time" class="form-control" id="calendar_start_time" name="calendar_start_time">
+									<label for="taskId" class="col-form-label">종료 시간</label> 
+									<input type="time" class="form-control" id="calendar_end_time" name="calendar_end_time">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-warning" id="addCalendar">추가</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+    </div>
+    <!-- End of Page Wrapper -->
+    
+    <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -317,10 +357,6 @@
             <!-- End of Footer -->
 
         </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">

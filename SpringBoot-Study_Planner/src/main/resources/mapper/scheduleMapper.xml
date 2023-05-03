@@ -7,10 +7,11 @@
         <selectKey keyProperty="schedule_num" resultType="long" order="BEFORE">
         	select seq_schedule.nextval from dual
         </selectKey>
-    insert into member (
+    insert into schedule (
     		schedule_num,
         	member_id,
             title,
+            subject,
             start_date,
             end_date,
             start_time,
@@ -20,6 +21,7 @@
         	#{schedule_num},
         	#{member_id},
             #{title},
+            #{subject},
             #{start_date},
             #{end_date},
             #{start_time},
@@ -27,8 +29,13 @@
            
         )
     </insert>
+    
+    <select id="findfindSchedules" resultType="schedule">
+    select * from schedule
+    </select>
+    
 		<select id="findMember" resultType="schedule">
-        select * from member where member_id = #{member_id}
+        select * from schedule where member_id = #{member_id}
     </select>
     
 </mapper>
