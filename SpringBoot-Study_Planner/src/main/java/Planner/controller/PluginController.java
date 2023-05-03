@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import Planner.Model.Timer;
 import Planner.Model.member.Member;
+import Planner.Model.timer.Timer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

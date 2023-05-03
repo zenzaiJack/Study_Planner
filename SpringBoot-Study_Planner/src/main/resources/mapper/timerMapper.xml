@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Planner.repository.TimerMapper">
+        <insert id="saveTimer">
+        <selectKey keyProperty="timer_num" resultType="long" order="BEFORE">
+        	select seq_timer.nextval from dual
+        </selectKey>
+   		insert into timer (
+    		timer_num,
+        	member_id,
+            study_time,
+            Subject_name
+        ) values (
+        	#{timer_num},
+        	#{member_id},
+        	#{study_time},
+        	#{Subject_name}
+        )
+    </insert>
+</mapper>

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import Planner.Model.Timer;
+import Planner.Model.timer.Timer;
 import Planner.repository.TimerMapper;
 
 public class ChartService {
