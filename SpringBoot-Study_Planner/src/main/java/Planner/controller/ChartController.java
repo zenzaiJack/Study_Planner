@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import Planner.Model.Subject;
 import Planner.Model.Timer;
 import Planner.repository.TimerMapper;
 
@@ -40,6 +40,22 @@ public class ChartController {
 	        return data;
 	    }
 		
-	    
+		@GetMapping("/pie-data")
+	    @ResponseBody
+	    public Map<String, Object> getPieData() {
+	        Map<String, Object> data = new HashMap<>();
+	        List<String> subject = new ArrayList<>();
+	        List<Integer> time = new ArrayList<>();
+	        List<Timer> pies = timerMapper.selectSubjectByMemberId("user1");
+
+	        for (Timer pie : pies) {
+	            subject.add(pie.getSubject_name()); // 차트의 라벨 데이터
+	            time.add((int)pie.getStudy_time_sum()); // 차트의 값 데이터
+	        }
+	        
+	        data.put("subject", subject);
+	        data.put("time", time);
+	        return data;
+	    }
 }
 

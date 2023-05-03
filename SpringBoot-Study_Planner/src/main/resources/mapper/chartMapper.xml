@@ -4,20 +4,37 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Planner.repository.TimerMapper">
     <insert id="timer">
-    	<selectKey keyProperty="member_num" resultType="long" order="BEFORE">
+    	<selectKey keyProperty="timer_num" resultType="long" order="BEFORE">
             select seq_timer.nextval from dual
         </selectKey>
         insert into timer (
         	timer_num,
         	member_id,
         	study_date,
-        	study_time
+        	study_time,
+        	subject_name
         ) values (
         	#{timer_num},
         	#{member_id},
         	#{study_date},
-        	#{study_time}
+        	#{study_time},
+        	#{subject_name}
         )
+     </insert>
+     
+     <insert id="subject">
+     <selectKey keyProperty="subject_num" resultType="long" order="BEFORE">
+     		select seq_subject.nextval from dual
+     </selectKey>
+     	insert into subject (
+     		subject_num,
+     		subject_name,
+     		member_id
+     	) values (
+     		#{subject_num},
+     		#{subject_name},
+     		member_id
+     	)
      </insert>
      
      <select id ="personStudy" resultType="Timer">
@@ -27,5 +44,12 @@
      <select id ="selectTimersByMemberId" resultType="Timer">
 		SELECT study_date, study_time FROM timer where member_id = #{member_id}
      	order by study_date
+     </select>
+     
+     <select id="selectSubjectByMemberId" resultType="Timer">
+     	  select subject_name, sum(study_time) as study_time_sum
+    	  from timer
+    	  where member_id = #{member_id}
+    	  group by subject_name
      </select>
 </mapper>
