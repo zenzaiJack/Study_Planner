@@ -13,9 +13,7 @@
             title,
             subject,
             start_date,
-            end_date,
-            start_time,
-            end_time
+            end_date
             
         ) values (
         	#{schedule_num},
@@ -23,9 +21,7 @@
             #{title},
             #{subject},
             #{start_date},
-            #{end_date},
-            #{start_time},
-            #{end_time}
+            #{end_date}
            
         )
     </insert>

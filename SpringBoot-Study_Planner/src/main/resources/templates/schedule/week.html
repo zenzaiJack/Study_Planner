@@ -72,10 +72,10 @@
                                     var obj = {
                                         "title" : content,
                                         "subject" : subject,
-                                        "start_d" : start_date,
-                                        "end_d" : end_date,
-                                        "start_t" : start_time,
-                                        "end_t" : end_time
+                                        "start_date" : start_date,
+                                        "end_dtae" : end_date,
+                                        "start_time" : start_time,
+                                        "end_time" : end_time
                                     }//전송할 객체 생성
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
@@ -299,6 +299,7 @@
 							</div>
 							<div class="modal-body">
 								<div class="form-group">
+								<form action="week" method="post" th:object="${Schedule}">
 									<label for="taskId" class="col-form-label">일정 내용</label> 
 									<input type="text" class="form-control" id="calendar_content" name="calendar_content"> 
 									<label for="taskId" class="col-form-label">과목</label> 
@@ -314,11 +315,11 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-warning" id="addCalendar">추가</button>
+								<input type="submit" class="btn btn-warning" id="addCalendar" value="추가">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal" id="sprintSettingModalClose">취소</button>
 							</div>
-
+							</form>
 						</div>
 					</div>
 				</div>
