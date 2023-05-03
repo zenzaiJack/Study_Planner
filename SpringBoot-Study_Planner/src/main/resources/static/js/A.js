@@ -65,7 +65,7 @@ function buttonEvt(){
   // stop btn
   $("#stopbtn").click(function(){
     if(time != 0){
-	  document.getElementById("data").innerHTML=time;
+	  document.getElementById("study_time").innerHTML=time;
       $(".fa").css("color","#FAED7D")
       this.style.color = "#4C4C4C";
       clearInterval(timer);

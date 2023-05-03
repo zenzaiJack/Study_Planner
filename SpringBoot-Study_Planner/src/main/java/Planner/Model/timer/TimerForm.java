@@ -8,6 +8,6 @@ public class TimerForm {
 	private String member_id;
 	private String study_date;
 	private long study_time;
-	private String Subject_name;
+	private String subject_name;
 }
 	

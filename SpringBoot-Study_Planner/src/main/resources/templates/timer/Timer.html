@@ -211,9 +211,18 @@
 										<h6 class="m-0 font-weight-bold text-primary">Subject</h6>
 									</div>
 									<div class="card-body">
-										<p class="text-gray-500 p-3 m-0">.text-gray-500</p>
-										<p class="text-gray-600 p-3 m-0">.text-gray-600</p>
-										<p class="text-gray-700 p-3 m-0">.text-gray-700</p>
+									<input type="hidden" class="receviceSubject" th:field="*{subject_name}">
+						<script>
+							function selectSubject(){
+								let subjectList = document.getElementByClassName('sendSubject');
+					            let subject = subjectList.options[mailList.selectedIndex].value;
+					            document.getElementByClassName('receviceSubject').value = subject;
+							};
+						</script>
+									<select th:each="subject, subjectStat: ${subjectList}" onclick="selectSubject()">
+										<option class="sendSubject" th:text="*{subject_name}"></option>
+									</select>
+
 									</div>
 								</div>
 							</div>
@@ -229,14 +238,14 @@
 											<div id="time" class="time">00:00:00</div>
 										</div>
 										<div class="btnBox">
-											<i id="startbtn" class="fa fa-play" aria-hidden="true"></i> <i
-												id="pausebtn" class="fa fa-pause" aria-hidden="true"></i> <i
-												id="stopbtn" class="fa fa-stop" aria-hidden="true"></i>
+											<i id="startbtn" class="fa fa-play" aria-hidden="true"></i> 
+											<i id="pausebtn" class="fa fa-pause" aria-hidden="true"></i> 
+											<input type="submit" id="stopbtn" class="fa fa-stop" aria-hidden="true">
 										</div>
 
 									</div>
 								</div>
-								<input type="hidden" th:field="data">
+								<input type="hidden" th:field="*{study_time}">
 					</form>
 
 				</div>

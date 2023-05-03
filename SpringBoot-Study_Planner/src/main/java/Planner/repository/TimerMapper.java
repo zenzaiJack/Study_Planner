@@ -23,6 +23,7 @@ public interface TimerMapper {
 	public List<Timer> selectSubjectByMemberId(@Param("member_id") String memberId);
 	// timer
 	public void saveTimer(TimerForm timerForm);
+	public List<Subject> getSubjectList(String member_id);
 	
 
 }

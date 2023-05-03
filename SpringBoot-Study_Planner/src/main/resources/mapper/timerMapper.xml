@@ -11,12 +11,16 @@
     		timer_num,
         	member_id,
             study_time,
-            Subject_name
+            subject_name
         ) values (
         	#{timer_num},
         	#{member_id},
         	#{study_time},
-        	#{Subject_name}
+        	#{subject_name}
         )
     </insert>
+    
+    	<select id="getSubjectList" resultType="subject">
+    		select * from subject where member_id = #{member_id}
+    	</select>
 </mapper>

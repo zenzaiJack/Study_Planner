@@ -6,7 +6,7 @@
     <typeAliases>
         <typeAlias type="Planner.Model.member.Member" alias="member"/>
         <typeAlias type="Planner.Model.schedule.Schedule" alias="schedule"/>
-        <typeAlias type="Planner.Model.Subject" alias="sucject"/>
+        <typeAlias type="Planner.Model.Subject" alias="subject"/>
         <typeAlias type="Planner.Model.timer.Timer" alias="timer"/>
         <typeAlias type="Planner.Model.timer.TimerForm" alias="timerForm"/>
     </typeAliases>
