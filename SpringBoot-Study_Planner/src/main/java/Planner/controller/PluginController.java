@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PluginController {
 	
 	// sessionStorage에 loginMember값 추가
-	@RequestMapping(value = "/setLoginMember", method = RequestMethod.GET)
+	@GetMapping("setLoginMember")
 	public Map<String, Object> setLoginMember(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("loginMember");
