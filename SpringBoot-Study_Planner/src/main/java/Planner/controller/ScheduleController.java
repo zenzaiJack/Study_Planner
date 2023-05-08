@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import Planner.Model.member.LoginForm;
 import Planner.Model.member.Member;
 import Planner.Model.member.RegisterForm;
@@ -81,7 +80,7 @@ public class ScheduleController {
 //	}
 	
 	@RequestMapping(value="sendSchedule", method=RequestMethod.GET)
-	public @ResponseBody int sendSchdule(@RequestBody Object obj) {
+	public @ResponseBody int sendSchedule(@RequestBody Object obj) {
 		log.info("obj: {}", obj);
 		return 1;
 	}

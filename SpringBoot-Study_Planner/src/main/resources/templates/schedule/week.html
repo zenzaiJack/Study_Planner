@@ -72,14 +72,14 @@
                                     var obj = {
                                         "title" : content,
                                         "subject" : subject,
-                                        "start_d" : start_date,
-                                        "end_d" : end_date,
-                                        "start_t" : start_time,
-                                        "end_t" : end_time
+                                        "start_date" : start_date,
+                                        "end_date" : end_date,
+                                        "start_time" : start_time,
+                                        "end_time" : end_time
                                     }//전송할 객체 생성
                                     $.ajax({
                                     	url: "/sendSchedule",
-                                    	type: "POST",
+                                    	type: "GET",
                                     	dataType: "json",
                                     	data: obj,
                                     	asyne:false,

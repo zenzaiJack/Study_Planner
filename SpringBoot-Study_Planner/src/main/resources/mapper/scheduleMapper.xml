@@ -27,10 +27,10 @@
     </insert>
     
     <select id="findfindSchedules" resultType="schedule">
-    select * from schedule
+    	select * from schedule
     </select>
     
-		<select id="findMember" resultType="schedule">
+	<select id="findMember" resultType="schedule">
         select * from schedule where member_id = #{member_id}
     </select>
     
