@@ -66,10 +66,10 @@ public class ScheduleController {
             return "schedule/week";
         }
         
-        LocalDateTime start_datetime = LocalDateTime.of(scheduleWriteForm.getStart_date().toLocalDate(), scheduleWriteForm.getStart_time().toLocalTime());
-        LocalDateTime end_datetime = LocalDateTime.of(scheduleWriteForm.getEnd_date().toLocalDate(), scheduleWriteForm.getEnd_time().toLocalTime());
-        scheduleWriteForm.setStart_date(start_datetime);
-        scheduleWriteForm.setEnd_date(end_datetime);
+//        LocalDateTime start_datetime = LocalDateTime.of(scheduleWriteForm.getStart_date().toLocalDate(), scheduleWriteForm.getStart_time().toLocalTime());
+//        LocalDateTime end_datetime = LocalDateTime.of(scheduleWriteForm.getEnd_date().toLocalDate(), scheduleWriteForm.getEnd_time().toLocalTime());
+//        scheduleWriteForm.setStart_date(start_datetime);
+//        scheduleWriteForm.setEnd_date(end_datetime);
         Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
         schedule.setMember_id(loginMember.getMember_id());
         scheduleMapper.saveSchedule(schedule);
