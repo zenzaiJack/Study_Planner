@@ -1,6 +1,7 @@
 package Planner.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,12 +55,12 @@ public class ScheduleController {
 	@PostMapping("week")
 	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
-            BindingResult result) {
+            BindingResult result, HashMap<String, String> param) {
 		 // 로그인 상태가 아니면 로그인 페이지로 보낸다.
 //        if (loginMember == null) {
 //            return "redirect:/member/login";
 //        }
-
+		log.info("param: {}", param);
         log.info("ScheduleWriteForm: {}", scheduleWriteForm);
         // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
         if (result.hasErrors()) {
