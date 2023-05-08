@@ -29,10 +29,10 @@ public class ScheduleWriteForm {
 		Schedule schedule = new Schedule();
 		schedule.setTitle(scheduleWriteForm.getTitle());
 		schedule.setSubject(scheduleWriteForm.getSubject());
-//		LocalDateTime start_datetime = LocalDateTime.of(scheduleWriteForm.getStart_date().toLocalDate(), scheduleWriteForm.getStart_time().toLocalTime());
-//        LocalDateTime end_datetime = LocalDateTime.of(scheduleWriteForm.getEnd_date().toLocalDate(), scheduleWriteForm.getEnd_time().toLocalTime());
-		schedule.setStart_date(scheduleWriteForm.getStart_date());
-		schedule.setEnd_date(scheduleWriteForm.getEnd_date());
+		LocalDateTime start_datetime = LocalDateTime.of(scheduleWriteForm.getStart_date().toLocalDate(), scheduleWriteForm.getStart_time().toLocalTime());
+        LocalDateTime end_datetime = LocalDateTime.of(scheduleWriteForm.getEnd_date().toLocalDate(), scheduleWriteForm.getEnd_time().toLocalTime());
+		schedule.setStart_date(start_datetime);
+		schedule.setEnd_date(end_datetime);
 		return schedule;
 	}
 }
