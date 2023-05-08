@@ -39,8 +39,8 @@
                 initialView: 'dayGridMonth', // 홈페이지에서 다른 형태의 view를 확인할  수 있다.
                 events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
                     {
-                        title:'일정',
-                        subject:'과목',
+                        title:'Schedule',
+                        subject:'Subject',
                         start:'2023-04-01 00:00:00',
                         end:'2023-04-03 24:00:00' 
                     }
@@ -48,7 +48,7 @@
                     center: 'addEventButton' // headerToolbar에 버튼을 추가
                 }, customButtons: {
                     addEventButton: { // 추가한 버튼 설정
-                        text : "일정 추가",  // 버튼 내용
+                        text : "Add Schedule",  // 버튼 내용
                         click : function(){ // 버튼 클릭 시 이벤트 추가
                             $("#calendarModal").modal("show"); // modal 나타내기
                             
@@ -321,17 +321,17 @@
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="taskId" class="col-form-label">일정 내용</label> 
-									<input type="text" class="form-control" id="calendar_content" name="calendar_content"> 
+									<input type="text" class="form-control" id="calendar_content" name="title"> 
 									<label for="taskId" class="col-form-label">과목</label> 
-									<input type="text" class="form-control" id="calendar_subject" name="calendar_subject"> 
+									<input type="text" class="form-control" id="calendar_subject" name="subject"> 
 									<label for="taskId" class="col-form-label">시작 날짜</label> 
-									<input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date"> 
+									<input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
 									<label for="taskId" class="col-form-label">종료 날짜</label> 
-									<input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date"> 
+									<input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
 									<label for="taskId" class="col-form-label">시작 시간</label> 
-									<input type="time" class="form-control" id="calendar_start_time" name="calendar_start_time">
+									<input type="time" class="form-control" id="calendar_start_time" name="start_time">
 									<label for="taskId" class="col-form-label">종료 시간</label> 
-									<input type="time" class="form-control" id="calendar_end_time" name="calendar_end_time">
+									<input type="time" class="form-control" id="calendar_end_time" name="end_time">
 								</div>
 							</div>
 							<div class="modal-footer">
