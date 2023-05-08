@@ -55,6 +55,7 @@ public class ScheduleController {
 		return "schedule/week";
 	}
 	
+<<<<<<< HEAD
 //	@PostMapping("week")
 //	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
 //            @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
@@ -85,6 +86,32 @@ public class ScheduleController {
 	public @ResponseBody int sendSchdule(@RequestBody Object obj) {
 		log.info("obj: {}", obj);
 		return 1;
+=======
+	@PostMapping("week")
+	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+            @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
+            BindingResult result) {
+		 // 로그인 상태가 아니면 로그인 페이지로 보낸다.
+//        if (loginMember == null) {
+//            return "redirect:/member/login";
+//        }
+
+        log.info("ScheduleWriteForm: {}", scheduleWriteForm);
+        // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
+        if (result.hasErrors()) {
+            return "schedule/week";
+        }
+        
+//        LocalDateTime start_datetime = LocalDateTime.of(scheduleWriteForm.getStart_date().toLocalDate(), scheduleWriteForm.getStart_time().toLocalTime());
+//        LocalDateTime end_datetime = LocalDateTime.of(scheduleWriteForm.getEnd_date().toLocalDate(), scheduleWriteForm.getEnd_time().toLocalTime());
+//        scheduleWriteForm.setStart_date(start_datetime);
+//        scheduleWriteForm.setEnd_date(end_datetime);
+        Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
+        schedule.setMember_id(loginMember.getMember_id());
+        scheduleMapper.saveSchedule(schedule);
+        log.info("Schedule: {}", schedule);
+		return "schedule/week";
+>>>>>>> branch 'master' of https://github.com/zenzaiJack/Study_Planner.git
 	}
 
 	
