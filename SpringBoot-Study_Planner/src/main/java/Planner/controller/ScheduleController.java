@@ -73,6 +73,7 @@ public class ScheduleController {
 //        scheduleWriteForm.setEnd_date(end_datetime);
         Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
         schedule.setMember_id(loginMember.getMember_id());
+        log.info("loginMember.getMember_id : {}", loginMember.getMember_id());
         scheduleMapper.saveSchedule(schedule);
         log.info("Schedule: {}", schedule);
 		return "schedule/week";
