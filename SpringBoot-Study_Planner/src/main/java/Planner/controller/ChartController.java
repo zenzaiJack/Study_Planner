@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import Planner.Model.Subject;
+import Planner.Model.member.Member;
 import Planner.Model.timer.Timer;
 import Planner.repository.TimerMapper;
 
@@ -22,11 +24,11 @@ public class ChartController {
 	    
 		@GetMapping("/chart-data")
 	    @ResponseBody
-	    public Map<String, Object> getChartData() {
+	    public Map<String, Object> getChartData(@SessionAttribute(value = "loginMember", required = false) Member loginMember) {
 	        Map<String, Object> data = new HashMap<>();
 	        List<String> labels = new ArrayList<>();
 	        List<Integer> values = new ArrayList<>();
-	        List<Timer> timers = timerMapper.selectTimersByMemberId("user1");
+	        List<Timer> timers = timerMapper.selectTimersByMemberId(loginMember.getMember_id());
 
 	        // DB에서 가져온 Timer 객체를 이용해 labels와 values 리스트에 데이터 추가
 	        for (int i = timers.size() - 1; i >= 0 && i >= timers.size() - 7; i--) {
@@ -42,11 +44,11 @@ public class ChartController {
 		
 		@GetMapping("/pie-data")
 	    @ResponseBody
-	    public Map<String, Object> getPieData() {
+	    public Map<String, Object> getPieData(@SessionAttribute(value = "loginMember", required = false) Member loginMember) {
 	        Map<String, Object> data = new HashMap<>();
 	        List<String> subject = new ArrayList<>();
 	        List<Integer> time = new ArrayList<>();
-	        List<Timer> pies = timerMapper.selectSubjectByMemberId("user1");
+	        List<Timer> pies = timerMapper.selectSubjectByMemberId(loginMember.getMember_id());
 
 	        for (Timer pie : pies) {
 	            subject.add(pie.getSubject_name()); // 과목 이름 받아오기
