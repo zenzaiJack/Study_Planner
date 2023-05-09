@@ -45,6 +45,23 @@ public class ScheduleController {
 		return "schedule/month";
 	}
 	
+	@PostMapping("month")
+	public String month(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+            @Validated @ModelAttribute("monthForm")ScheduleWriteForm scheduleWriteForm,
+            BindingResult result, HashMap<String, String> param) {
+		log.info("param: {}", param);
+        log.info("ScheduleWriteForm: {}", scheduleWriteForm);
+        // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
+        if (result.hasErrors()) {
+            return "schedule/month";
+        }
+        
+        Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
+        schedule.setMember_id(loginMember.getMember_id());
+        scheduleMapper.saveSchedule(schedule);
+        log.info("Schedule: {}", schedule);
+		return "schedule/week";
+	}
 	
 	@GetMapping("week")		
 	public String weekForm(Model model) {
@@ -56,10 +73,6 @@ public class ScheduleController {
 	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
             BindingResult result, HashMap<String, String> param) {
-		 // 로그인 상태가 아니면 로그인 페이지로 보낸다.
-//        if (loginMember == null) {
-//            return "redirect:/member/login";
-//        }
 		log.info("param: {}", param);
         log.info("ScheduleWriteForm: {}", scheduleWriteForm);
         // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
@@ -67,13 +80,8 @@ public class ScheduleController {
             return "schedule/week";
         }
         
-//        LocalDateTime start_datetime = LocalDateTime.of(scheduleWriteForm.getStart_date().toLocalDate(), scheduleWriteForm.getStart_time().toLocalTime());
-//        LocalDateTime end_datetime = LocalDateTime.of(scheduleWriteForm.getEnd_date().toLocalDate(), scheduleWriteForm.getEnd_time().toLocalTime());
-//        scheduleWriteForm.setStart_date(start_datetime);
-//        scheduleWriteForm.setEnd_date(end_datetime);
         Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
         schedule.setMember_id(loginMember.getMember_id());
-        log.info("loginMember.getMember_id : {}", loginMember.getMember_id());
         scheduleMapper.saveSchedule(schedule);
         log.info("Schedule: {}", schedule);
 		return "schedule/week";
