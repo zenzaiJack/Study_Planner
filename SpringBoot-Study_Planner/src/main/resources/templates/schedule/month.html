@@ -105,7 +105,7 @@
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
                                 document.getElementById("obj");
-                                insert.submit();
+                                today.submit();
                             });
                         }
                     }//
@@ -123,6 +123,14 @@
 	padding-left: 2%;
 }
 </style>
+
+<style>
+#subjectse {
+	width: 465px;
+	height: 40px;
+}
+</style>
+</head>
 </head>
 <body id="page-top">
 
@@ -378,11 +386,12 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form action="month" method="Post" th:object="${ScheduleWriteForm}" id="insert">
+							<form action="month" method="Post" th:object="${ScheduleWriteForm}" id="today">
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="taskId" class="col-form-label">Subject</label> 
-									<input type="text" class="form-control" id="calendar_subject" name="subject"> 
+									<select id="subjectse">
+									<option>Subject</option>
+									</select><br> 
 									<label for="taskId" class="col-form-label">Today Start Time</label> 
                            			<input type="time" class="form-control" id="calendar_start_time" name="start_time">
                            			<label for="taskId" class="col-form-label">Today End Time</label> 
