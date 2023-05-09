@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ScheduleController {
 
-	
+	//달별 확인
 	private final ScheduleMapper scheduleMapper;
 	@GetMapping("month")		
 	public String monthForm(Model model) {
@@ -45,6 +45,7 @@ public class ScheduleController {
 		return "schedule/month";
 	}
 	
+	//월별 입력
 	@PostMapping("month")
 	public String month(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("monthForm")ScheduleWriteForm scheduleWriteForm,
@@ -63,12 +64,14 @@ public class ScheduleController {
 		return "schedule/week";
 	}
 	
+	//주별 확인
 	@GetMapping("week")		
 	public String weekForm(Model model) {
 		model.addAttribute("week", new Schedule());	
 		return "schedule/week";
 	}
 	
+	//주별 입력
 	@PostMapping("week")
 	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
