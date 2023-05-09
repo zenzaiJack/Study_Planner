@@ -1,12 +1,11 @@
 package Planner.Model.schedule;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
+
 
 
 import lombok.Data;
@@ -21,9 +20,7 @@ public class ScheduleWriteForm {
 	private LocalDate start_date;
 	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate end_date;
-//	 @DateTimeFormat(pattern = "a hh:mm")
 	private String start_time;
-//	 @DateTimeFormat(pattern = "a hh:mm")
 	private String end_time;
 	
 	public static Schedule toSchedule(ScheduleWriteForm scheduleWriteForm) {

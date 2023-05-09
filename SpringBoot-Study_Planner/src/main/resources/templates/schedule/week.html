@@ -19,15 +19,15 @@
     <!-- Custom styles for this template-->
     <link href="css/BootstrapBasic.css" rel="stylesheet">
     <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	
-	<!-- fullcalendar -->
+   src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   
+   <!-- fullcalendar -->
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+   href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
 <script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+   src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
 
 
 <script type="text/javascript">
@@ -80,6 +80,20 @@
                                         "end_time" : end_time
                                     }//전송할 객체 생성
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                    $.ajax({
+                                    	url: "/sendSchedule",
+                                    	type: "GET",
+                                    	dataType: "json",
+                                    	data: obj,
+                                    	asyne:false,
+                                    	success: function(data){
+                                    		if(data == 1){
+                                    			console.log("성공");
+                                    		} else {
+                                    			console.log("실패");
+                                    		}
+                                    	}
+                                    }); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
                                 document.getElementById("obj");
                                 insert.submit();
@@ -97,8 +111,8 @@
     </script>
 <style>
 #calendarBox {
-	width: 65%;
-	padding-left: 2%;
+   width: 65%;
+   padding-left: 2%;
 }
 </style>
 
@@ -113,7 +127,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="working/index">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -125,9 +139,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Main</span></a>
             </li>
 
             <!-- Divider -->
@@ -286,10 +300,11 @@
 
 
             <!-- End of Main Content -->
-			<!-- 캘린더 밑에 넣고 싶을때!!! -->
-				<div id="calendarBox">
-					<div id="calendar"></div>
-				</div>
+         <!-- 캘린더 밑에 넣고 싶을때!!! -->
+            <div id="calendarBox">
+               <div id="calendar"></div>
+            </div>
+
 
 				<!-- modal 추가 -->
 				<div class="modal fade" id="calendarModal" tabindex="-1"
@@ -330,6 +345,46 @@
 						</div>
 					</div>
 				</div>
+
+            <!-- modal 추가 -->
+            <div class="modal fade" id="calendarModal" tabindex="-1"
+               role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                           aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label for="taskId" class="col-form-label">일정 내용</label> 
+                           <input type="text" class="form-control" id="calendar_content" name="title"> 
+                           <label for="taskId" class="col-form-label">과목</label> 
+                           <input type="text" class="form-control" id="calendar_subject" name="subject"> 
+                           <label for="taskId" class="col-form-label">시작 날짜</label> 
+                           <input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
+                           <label for="taskId" class="col-form-label">종료 날짜</label> 
+                           <input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
+                           <label for="taskId" class="col-form-label">시작 시간</label> 
+                           <input type="time" class="form-control" id="calendar_start_time" name="start_time">
+                           <label for="taskId" class="col-form-label">종료 시간</label> 
+                           <input type="time" class="form-control" id="calendar_end_time" name="end_time">
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
+                        <button type="button" class="btn btn-secondary"
+                           data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+                     </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
     </div>
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
