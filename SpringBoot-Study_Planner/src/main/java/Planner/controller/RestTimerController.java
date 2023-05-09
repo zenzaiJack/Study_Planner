@@ -27,6 +27,7 @@ public class RestTimerController {
 		TimerForm timerForm = new TimerForm();
 		timerForm.setMember_id(loginMember.getMember_id());
 		timerForm.setStudy_time(timerChecker.getStudy_time());
+		timerForm.setSubject_name(timerChecker.getSubject_name());
 		log.info("timerForm : {}", timerForm);
 		timerMapper.saveTimer(timerForm);
 		return "Post Mapping Data";

@@ -29,7 +29,7 @@
     </insert>
     
     <select id="findfindSchedules" resultType="schedule">
-    select * from schedule
+    	select * from schedule
     </select>
     
       <select id="findMember" resultType="schedule">

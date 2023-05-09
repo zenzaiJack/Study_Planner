@@ -1,6 +1,6 @@
 var time = 0;
 var starFlag = true;
-var subject = $("input[type=radio][name=subject]:checked").val();
+ 
 $(document).ready(function() {
 	buttonEvt();
 });
@@ -68,6 +68,8 @@ function buttonEvt() {
 	$("#stopbtn").click(function() {
 		if (time != 0) {
 			console.log("sendTimer");
+			var subject = $("input[type=radio][name=subject]:checked").val();
+			console.log(subject);			
 			$.ajax({
 				url: "sendTimer",
 				type: "post",
