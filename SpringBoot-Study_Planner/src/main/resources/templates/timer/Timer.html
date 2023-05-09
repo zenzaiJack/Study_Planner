@@ -190,7 +190,6 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<form action="/timer" method="POST" th:object="${timerForm}">
 						<!-- Page Heading -->
 						<div
 							class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -211,18 +210,12 @@
 										<h6 class="m-0 font-weight-bold text-primary">Subject</h6>
 									</div>
 									<div class="card-body">
-									<input type="hidden" class="receviceSubject" th:field="*{subject_name}">
-						<script>
-							function selectSubject(){
-								let subjectList = document.getElementByClassName('sendSubject');
-					            let subject = subjectList.options[mailList.selectedIndex].value;
-					            document.getElementByClassName('receviceSubject').value = subject;
-							};
-						</script>
-									<select th:each="subject, subjectStat: ${subjectList}" onclick="selectSubject()">
-										<option class="sendSubject" th:text="*{subject_name}"></option>
-									</select>
-
+										<th:block th:each="subject : ${subjects}">
+										<div>
+											<span>[[${subject.subject_name}]]</span>
+											<input type="radio" name="subject" th:value="${subject.subject_name}"><br>
+										</div>
+										</th:block>
 									</div>
 								</div>
 							</div>
@@ -240,14 +233,11 @@
 										<div class="btnBox">
 											<i id="startbtn" class="fa fa-play" aria-hidden="true"></i> 
 											<i id="pausebtn" class="fa fa-pause" aria-hidden="true"></i> 
-											<input type="submit" id="stopbtn" class="fa fa-stop" aria-hidden="true">
+											<i id="stopbtn" class="fa fa-stop" aria-hidden="true"></i>
 										</div>
 
 									</div>
 								</div>
-								<input type="hidden" th:field="*{study_time}">
-					</form>
-
 				</div>
 			</div>
 

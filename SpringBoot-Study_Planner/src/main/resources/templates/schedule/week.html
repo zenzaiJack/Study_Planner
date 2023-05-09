@@ -77,7 +77,24 @@
                                         "start_time" : start_time,
                                         "end_time" : end_time
                                     }//전송할 객체 생성
+<<<<<<< HEAD
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+=======
+                                    $.ajax({
+                                    	url: "/sendSchedule",
+                                    	type: "GET",
+                                    	dataType: "json",
+                                    	data: obj,
+                                    	asyne:false,
+                                    	success: function(data){
+                                    		if(data == 1){
+                                    			console.log("성공");
+                                    		} else {
+                                    			console.log("실패");
+                                    		}
+                                    	}
+                                    }); //서버로 해당 객체를 전달해서 DB 연동 가능
+>>>>>>> branch 'Model' of https://github.com/zenzaiJack/Study_Planner.git
                                 }
                                 document.getElementById("obj");
                                 insert.submit();

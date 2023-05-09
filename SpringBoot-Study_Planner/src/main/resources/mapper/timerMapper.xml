@@ -20,7 +20,7 @@
         )
     </insert>
     
-    	<select id="getSubjectList" resultType="subject">
-    		select * from subject where member_id = #{member_id}
-    	</select>
+    <select id="getSubjectList" resultType="subject">
+    	select * from subject where member_id = #{member_id}
+    </select>
 </mapper>
