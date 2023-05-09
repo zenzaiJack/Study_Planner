@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,27 +30,24 @@ import Planner.repository.ScheduleMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ScheduleController {
-
-	
 	private final ScheduleMapper scheduleMapper;
-	@GetMapping("month")		
+
+	@GetMapping("month")
 	public String monthForm(Model model) {
-		model.addAttribute("month", new Schedule());	
+		model.addAttribute("month", new Schedule());
 		return "schedule/month";
 	}
-	
-	
-	@GetMapping("week")		
+
+	@GetMapping("week")
 	public String weekForm(Model model) {
-		model.addAttribute("week", new Schedule());	
+		model.addAttribute("week", new Schedule());
 		return "schedule/week";
 	}
-	
+
 //	@PostMapping("week")
 //	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
 //            @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
@@ -79,12 +72,15 @@ public class ScheduleController {
 //        scheduleMapper.saveSchedule(schedule);
 //		return "schedule/week";
 //	}
-		@PostMapping("week")
-		public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+	@PostMapping("week")
+   public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
             BindingResult result, HashMap<String, String> param) {
-			
 		log.info("param: {}", param);
+       // 로그인 상태가 아니면 로그인 페이지로 보낸다.
+//        if (loginMember == null) {
+//            return "redirect:/member/login";
+//        }
         log.info("ScheduleWriteForm: {}", scheduleWriteForm);
         // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
         if (result.hasErrors()) {
@@ -100,7 +96,5 @@ public class ScheduleController {
         scheduleMapper.saveSchedule(schedule);
         log.info("Schedule: {}", schedule);
 		return "schedule/week";
-	}
-
-	
+   }
 }

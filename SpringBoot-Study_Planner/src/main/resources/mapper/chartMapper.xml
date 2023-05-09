@@ -22,6 +22,7 @@
         )
      </insert>
      
+        
      <insert id="subject">
      <selectKey keyProperty="subject_num" resultType="long" order="BEFORE">
      		select seq_subject.nextval from dual
