@@ -39,7 +39,7 @@ public class TimerController {
 	
 	@GetMapping("timer")
 	public String setTimer(Model model, @SessionAttribute("loginMember") Member loginMember) {
-		List<Subject> subjects = timerMapper.getSubjectList(loginMember.getMember_id());
+		List<String> subjects = timerMapper.getSubjectList(loginMember.getMember_id());
 		log.info("subjects : {}", subjects);
 		if(subjects != null) {
 			model.addAttribute("subjects", subjects);

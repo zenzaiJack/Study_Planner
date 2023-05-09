@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import Planner.Model.Subject;
 import Planner.Model.member.Member;
+import Planner.Model.schedule.Schedule;
 import Planner.Model.timer.Timer;
 import Planner.Model.timer.TimerForm;
 
@@ -23,7 +24,7 @@ public interface TimerMapper {
 	public List<Timer> selectSubjectByMemberId(@Param("member_id") String memberId);
 	// timer
 	public void saveTimer(TimerForm timerForm);
-	public List<Subject> getSubjectList(String member_id);
+	public List<String> getSubjectList(String member_id);
 	
 
 }

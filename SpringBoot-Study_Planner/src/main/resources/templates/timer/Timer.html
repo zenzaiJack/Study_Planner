@@ -57,8 +57,8 @@
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item active"><a class="nav-link" href="/"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+			<li class="nav-item active"><a class="nav-link" href="index"> <i
+					class="fas fa-fw fa-tachometer-alt"></i> <span>Main</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
@@ -212,8 +212,8 @@
 									<div class="card-body">
 										<th:block th:each="subject : ${subjects}">
 										<div>
-											<span>[[${subject.subject_name}]]</span>
-											<input type="radio" name="subject" th:value="${subject.subject_name}"><br>
+											<span>[[${subject}]]</span>
+											<input type="radio" name="subject" th:value="${subject}"><br>
 										</div>
 										</th:block>
 									</div>
