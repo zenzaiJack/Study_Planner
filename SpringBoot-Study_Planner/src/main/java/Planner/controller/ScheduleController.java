@@ -34,6 +34,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller
 public class ScheduleController {
+
+
+	//달별 확인
 	private final ScheduleMapper scheduleMapper;
 
 	@GetMapping("month")
@@ -42,11 +45,40 @@ public class ScheduleController {
 		return "schedule/month";
 	}
 
+	
+	//월별 입력
+	@PostMapping("month")
+	public String month(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+            @Validated @ModelAttribute("monthForm")ScheduleWriteForm scheduleWriteForm,
+            BindingResult result, HashMap<String, String> param) {
+		log.info("param: {}", param);
+        log.info("ScheduleWriteForm: {}", scheduleWriteForm);
+        // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
+        if (result.hasErrors()) {
+            return "schedule/month";
+        }
+        
+        Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
+        schedule.setMember_id(loginMember.getMember_id());
+        scheduleMapper.saveSchedule(schedule);
+        log.info("Schedule: {}", schedule);
+		return "schedule/week";
+	}
+	
+			
+
+
+
+	//주별 확인
 	@GetMapping("week")
 	public String weekForm(Model model) {
 		model.addAttribute("week", new Schedule());
 		return "schedule/week";
 	}
+
+	
+	//주별 입력
+
 
 //	@PostMapping("week")
 //	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
@@ -72,6 +104,7 @@ public class ScheduleController {
 //        scheduleMapper.saveSchedule(schedule);
 //		return "schedule/week";
 //	}
+
 	@PostMapping("week")
    public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,

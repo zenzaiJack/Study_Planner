@@ -62,15 +62,15 @@
                                 
                                 //내용 입력 여부 확인
                                 if(content == null || content == ""){
-                                    alert("내용을 입력하세요.");
+                                    alert("Please Add Content");
                                 }else if(subject == null || subject == ""){
-                                    alert("내용을 입력하세요.");
+                                    alert("Please Add Content");
                                 }else if(start_date == "" || end_date ==""){
-                                    alert("날짜를 입력하세요.");
+                                    alert("Please Add Date");
                                 }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
-                                    alert("종료일이 시작일보다 먼저입니다.");
+                                    alert("End Date is Before Start Date");
                                 }else if(start_time == "" || end_time ==""){
-                                    alert("시간을 입력하세요.");
+                                    alert("Please Add Time");
                                 }else{ // 정상적인 입력 시
                                     var obj = {
                                         "title" : content,
@@ -89,8 +89,8 @@
                     }
                 },
                 
-                editable: false, // false로 변경 시 draggable 작동 x 
-                displayEventTime: false // 시간 표시 
+                editable: true, // false로 변경 시 draggable 작동 x 
+                displayEventTime: true // 시간 표시 
             });
             calendar.render();
         });
@@ -123,9 +123,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index">
+                <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Main</span></a>
+                    <span>Dashboard</span></a>
             </li>
 
             <!-- Divider -->
@@ -157,17 +157,19 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Timer</span>
+                    <span>Utilities</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="timer">timer</a>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
             </li>
-
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -311,7 +313,7 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+								<h5 class="modal-title" id="exampleModalLabel">Add Schedule</h5>
 								<button type="button" class="close" data-dismiss="modal"
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
@@ -320,24 +322,24 @@
 							<form action="month" method="Post" th:object="${ScheduleWriteForm}" id="insert">
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="taskId" class="col-form-label">일정 내용</label> 
+									<label for="taskId" class="col-form-label">Schedule Conversation</label> 
 									<input type="text" class="form-control" id="calendar_content" name="title"> 
-									<label for="taskId" class="col-form-label">과목</label> 
+									<label for="taskId" class="col-form-label">Subject</label> 
 									<input type="text" class="form-control" id="calendar_subject" name="subject"> 
-									<label for="taskId" class="col-form-label">시작 날짜</label> 
+									<label for="taskId" class="col-form-label">Start Date</label> 
 									<input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
-									<label for="taskId" class="col-form-label">종료 날짜</label> 
+									<label for="taskId" class="col-form-label">End Date</label> 
 									<input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
-									<label for="taskId" class="col-form-label">시작 시간</label> 
+									<label for="taskId" class="col-form-label">Today Start Time</label> 
 									<input type="time" class="form-control" id="calendar_start_time" name="start_time">
-									<label for="taskId" class="col-form-label">종료 시간</label> 
+									<label for="taskId" class="col-form-label">Today End Time</label> 
 									<input type="time" class="form-control" id="calendar_end_time" name="end_time">
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-warning" id="addCalendar">추가</button>
+								<button type="button" class="btn btn-warning" id="addCalendar">Add</button>
 								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+									data-dismiss="modal" id="sprintSettingModalClose">Cancel</button>
 							</div>
 							</form>
 						</div>
@@ -350,7 +352,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Your Website 2023</span>
                     </div>
                 </div>
             </footer>
