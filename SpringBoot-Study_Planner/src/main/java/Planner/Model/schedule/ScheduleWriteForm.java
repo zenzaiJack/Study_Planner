@@ -20,8 +20,6 @@ public class ScheduleWriteForm {
 	private LocalDate start_date;
 	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate end_date;
-	private String start_time;
-	private String end_time;
 	
 	public static Schedule toSchedule(ScheduleWriteForm scheduleWriteForm) {
 		Schedule schedule = new Schedule();
@@ -29,8 +27,6 @@ public class ScheduleWriteForm {
 		schedule.setSubject(scheduleWriteForm.getSubject());
 		schedule.setStart_date(scheduleWriteForm.getStart_date());
 		schedule.setEnd_date(scheduleWriteForm.getEnd_date());
-		schedule.setStart_time(scheduleWriteForm.getStart_time());
-		schedule.setEnd_time(scheduleWriteForm.getEnd_time());
 		return schedule;
 	}
 }

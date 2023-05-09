@@ -45,7 +45,7 @@
                         end:'2023-04-03 24:00:00' 
                     }
                 ], headerToolbar: {
-                    center: 'addEventButton' // headerToolbar에 버튼을 추가
+                    center: 'addEventButton addTodayButton', // headerToolbar에 버튼을 추가
                 }, customButtons: {
                     addEventButton: { // 추가한 버튼 설정
                         text : "Add Schedule",  // 버튼 내용
@@ -57,8 +57,6 @@
                                 var subject = $("#calendar_subject").val();
                                 var start_date = $("#calendar_start_date").val();
                                 var end_date = $("#calendar_end_date").val();
-                                var start_time = $("#calendar_start_time").val();
-                                var end_time = $("#calendar_end_time").val();
                                 
                                 //내용 입력 여부 확인
                                 if(content == null || content == ""){
@@ -69,16 +67,12 @@
                                     alert("Please Add Date");
                                 }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
                                     alert("End Date is Before Start Date");
-                                }else if(start_time == "" || end_time ==""){
-                                    alert("Please Add Time");
                                 }else{ // 정상적인 입력 시
                                     var obj = {
                                         "title" : content,
                                         "subject" : subject,
-                                        "start_d" : start_date,
-                                        "end_d" : end_date,
-                                        "start_t" : start_time,
-                                        "end_t" : end_time
+                                        "start_date" : start_date,
+                                        "end_date" : end_date,
                                     }//전송할 객체 생성
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
@@ -86,7 +80,35 @@
                                 insert.submit();
                             });
                         }
-                    }
+                    },//
+                    addTodayButton: { // 추가한 버튼 설정
+                        text : "Add Time",  // 버튼 내용
+                        click : function(){ // 버튼 클릭 시 이벤트 추가
+                            $("#calendarModal2").modal("show"); // modal 나타내기
+                            
+                            $("#addCalendar2").on("click",function(){  // modal의 추가 버튼 클릭 시
+                                var subject = $("#calendar_subject").val();
+                                var start_time = $("#calendar_start_time").val();
+                                var end_time = $("#calendar_end_time").val();
+
+                                //내용 입력 여부 확인
+                                if(subject == null || subject == ""){
+                                    alert("Please Add Content");
+                                }else if(start_time == "" || end_time ==""){
+                                    alert("Please Add Time");
+                                }else{ // 정상적인 입력 시
+                                    var obj = {
+                                        "subject" : subject,
+                                        "start_time" : start_time,
+                                        "end_time" : end_time,
+                                    }//전송할 객체 생성
+                                    console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                }
+                                document.getElementById("obj");
+                                today.submit();
+                            });
+                        }
+                    }//
                 },
                 
                 editable: true, // false로 변경 시 draggable 작동 x 
@@ -101,6 +123,14 @@
 	padding-left: 2%;
 }
 </style>
+
+<style>
+#subjectse {
+	width: 465px;
+	height: 40px;
+}
+</style>
+</head>
 </head>
 <body id="page-top">
 
@@ -299,6 +329,7 @@
         </div>
         <!-- End of Content Wrapper -->
 <!-- 캘린더 밑에 넣고 싶을때!!! -->
+				<!-- 캘린더 그자체 -->
 				<div id="calendarBox">
 					<div id="calendar"></div>
 				</div>
@@ -327,10 +358,6 @@
 									<input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
 									<label for="taskId" class="col-form-label">End Date</label> 
 									<input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
-									<label for="taskId" class="col-form-label">Today Start Time</label> 
-									<input type="time" class="form-control" id="calendar_start_time" name="start_time">
-									<label for="taskId" class="col-form-label">Today End Time</label> 
-									<input type="time" class="form-control" id="calendar_end_time" name="end_time">
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -343,17 +370,44 @@
 					</div>
 				</div>
     </div>
+				<!-- modal 추가 -->
+				<div class="modal fade" id="calendarModal2" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Add Today Schedule</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form action="month" method="Post" th:object="${ScheduleWriteForm}" id="today">
+							<div class="modal-body">
+								<div class="form-group">
+									<select id="subjectse">
+									<option>Subject</option>
+									</select><br> 
+									<label for="taskId" class="col-form-label">Today Start Time</label> 
+                           			<input type="time" class="form-control" id="calendar_start_time" name="start_time">
+                           			<label for="taskId" class="col-form-label">Today End Time</label> 
+                           		<input type="time" class="form-control" id="calendar_end_time" name="end_time">
+ 
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-warning" id="addCalendar"2>Add</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal" id="sprintSettingModalClose">Cancel</button>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+    </div>
     <!-- End of Page Wrapper -->
     
-    <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2023</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
 
