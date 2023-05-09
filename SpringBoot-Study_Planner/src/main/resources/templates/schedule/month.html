@@ -57,8 +57,6 @@
                                 var subject = $("#calendar_subject").val();
                                 var start_date = $("#calendar_start_date").val();
                                 var end_date = $("#calendar_end_date").val();
-                                var start_time = $("#calendar_start_time").val();
-                                var end_time = $("#calendar_end_time").val();
                                 
                                 //내용 입력 여부 확인
                                 if(content == null || content == ""){
@@ -69,16 +67,12 @@
                                     alert("Please Add Date");
                                 }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
                                     alert("End Date is Before Start Date");
-                                }else if(start_time == "" || end_time ==""){
-                                    alert("Please Add Time");
                                 }else{ // 정상적인 입력 시
                                     var obj = {
                                         "title" : content,
                                         "subject" : subject,
                                         "start_d" : start_date,
                                         "end_d" : end_date,
-                                        "start_t" : start_time,
-                                        "end_t" : end_time
                                     }//전송할 객체 생성
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
@@ -331,10 +325,6 @@
 									<input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
 									<label for="taskId" class="col-form-label">End Date</label> 
 									<input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
-									<label for="taskId" class="col-form-label">Today Start Time</label> 
-									<input type="time" class="form-control" id="calendar_start_time" name="start_time">
-									<label for="taskId" class="col-form-label">Today End Time</label> 
-									<input type="time" class="form-control" id="calendar_end_time" name="end_time">
 								</div>
 							</div>
 							<div class="modal-footer">
