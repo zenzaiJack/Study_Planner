@@ -35,7 +35,6 @@ public class ChartController {
 	            labels.add(0, timer.getStudy_date().substring(0,11)); // 역순으로 추가
 	            values.add(0, (int) timer.getStudy_time()); // 역순으로 추가
 	        }
-
 	        data.put("labels", labels);
 	        data.put("data", values);
 	        return data;

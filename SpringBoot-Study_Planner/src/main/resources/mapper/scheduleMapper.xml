@@ -31,14 +31,10 @@
     </insert>
     
     <select id="findfindSchedules" resultType="schedule">
-    	select * from schedule
+    select * from schedule
     </select>
     
-<<<<<<< HEAD
       <select id="findMember" resultType="schedule">
-=======
-	<select id="findMember" resultType="schedule">
->>>>>>> branch 'Model' of https://github.com/zenzaiJack/Study_Planner.git
         select * from schedule where member_id = #{member_id}
     </select>
     
