@@ -77,20 +77,7 @@
                                         "start_time" : start_time,
                                         "end_time" : end_time
                                     }//전송할 객체 생성
-                                    $.ajax({
-                                    	url: "/sendSchedule",
-                                    	type: "POST",
-                                    	dataType: "json",
-                                    	data: obj,
-                                    	async:false,
-                                    	success: function(data){
-                                    		if(data == 1){
-                                    			console.log("성공");
-                                    		} else {
-                                    			console.log("실패");
-                                    		}
-                                    	}
-                                    }); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                    console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
                                 document.getElementById("obj");
                                 insert.submit();
@@ -170,13 +157,16 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Timer</span>
+                    <span>Utilities</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="timer">timer</a>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
             </li>
@@ -299,7 +289,6 @@
                <div id="calendar"></div>
             </div>
 
-<<<<<<< HEAD
             <!-- modal 추가 -->
             <div class="modal fade" id="calendarModal" tabindex="-1"
                role="dialog" aria-labelledby="exampleModalLabel"
@@ -313,25 +302,25 @@
                            <span aria-hidden="true">&times;</span>
                         </button>
                      </div>
+                     <form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
                      <div class="modal-body">
                         <div class="form-group">
-                        <form action="week" method="post" th:object="${weekForm}">
                            <label for="taskId" class="col-form-label">일정 내용</label> 
-                           <input type="text" class="form-control" id="calendar_content" name="calendar_content"> 
+                           <input type="text" class="form-control" id="calendar_content" name="title"> 
                            <label for="taskId" class="col-form-label">과목</label> 
-                           <input type="text" class="form-control" id="calendar_subject" name="calendar_subject"> 
+                           <input type="text" class="form-control" id="calendar_subject" name="subject"> 
                            <label for="taskId" class="col-form-label">시작 날짜</label> 
-                           <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date"> 
+                           <input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
                            <label for="taskId" class="col-form-label">종료 날짜</label> 
-                           <input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date"> 
+                           <input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
                            <label for="taskId" class="col-form-label">시작 시간</label> 
-                           <input type="time" class="form-control" id="calendar_start_time" name="calendar_start_time">
+                           <input type="time" class="form-control" id="calendar_start_time" name="start_time">
                            <label for="taskId" class="col-form-label">종료 시간</label> 
-                           <input type="time" class="form-control" id="calendar_end_time" name="calendar_end_time">
+                           <input type="time" class="form-control" id="calendar_end_time" name="end_time">
                         </div>
                      </div>
                      <div class="modal-footer">
-                        <input type="submit" class="btn btn-warning" id="addCalendar" value="추가">
+                        <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
                         <button type="button" class="btn btn-secondary"
                            data-dismiss="modal" id="sprintSettingModalClose">취소</button>
                      </div>
@@ -339,47 +328,6 @@
                   </div>
                </div>
             </div>
-=======
-				<!-- modal 추가 -->
-				<div class="modal fade" id="calendarModal" tabindex="-1"
-					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
-							<div class="modal-body">
-								<div class="form-group">
-									<label for="taskId" class="col-form-label">일정 내용</label> 
-									<input type="text" class="form-control" id="calendar_content" name="title"> 
-									<label for="taskId" class="col-form-label">과목</label> 
-									<input type="text" class="form-control" id="calendar_subject" name="subject"> 
-									<label for="taskId" class="col-form-label">시작 날짜</label> 
-									<input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
-									<label for="taskId" class="col-form-label">종료 날짜</label> 
-									<input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
-									<label for="taskId" class="col-form-label">시작 시간</label> 
-									<input type="time" class="form-control" id="calendar_start_time" name="start_time">
-									<label for="taskId" class="col-form-label">종료 시간</label> 
-									<input type="time" class="form-control" id="calendar_end_time" name="end_time">
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-warning" id="addCalendar">추가</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal" id="sprintSettingModalClose">취소</button>
-							</div>
-
-						</div>
-					</div>
-				</div>
->>>>>>> branch 'Model' of https://github.com/zenzaiJack/Study_Planner.git
     </div>
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
