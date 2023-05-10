@@ -25,6 +25,7 @@ import Planner.Model.member.Member;
 import Planner.Model.member.RegisterForm;
 import Planner.Model.schedule.Schedule;
 import Planner.Model.schedule.ScheduleWriteForm;
+import Planner.Model.schedule.TodaySchedule;
 import Planner.repository.MemberMapper;
 import Planner.repository.ScheduleMapper;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,7 @@ public class ScheduleController {
 	@PostMapping("month")
 	public String month(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("monthForm")ScheduleWriteForm scheduleWriteForm,
+            @Validated @ModelAttribute("monthForm")TodaySchedule todaySchedule,
             BindingResult result, HashMap<String, String> param) {
 		log.info("param: {}", param);
         log.info("ScheduleWriteForm: {}", scheduleWriteForm);
@@ -62,6 +64,11 @@ public class ScheduleController {
         schedule.setMember_id(loginMember.getMember_id());
         scheduleMapper.saveSchedule(schedule);
         log.info("Schedule: {}", schedule);
+        
+        todaySchedule.setMember_id(loginMember.getMember_id());
+        scheduleMapper.saveToday(todaySchedule);
+        log.info("TodaySchedule: {}", todaySchedule);
+        
 		return "schedule/week";
 	}
 	
@@ -84,6 +91,7 @@ public class ScheduleController {
 	@PostMapping("week")
    public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
+            @Validated @ModelAttribute("weekForm")TodaySchedule todaySchedule,
             BindingResult result, HashMap<String, String> param) {
 		log.info("param: {}", param);
        // 로그인 상태가 아니면 로그인 페이지로 보낸다.
@@ -97,10 +105,14 @@ public class ScheduleController {
         }
         
         Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
-        String member_id = loginMember.getMember_id();
         schedule.setMember_id(loginMember.getMember_id());
         scheduleMapper.saveSchedule(schedule);
         log.info("Schedule: {}", schedule);
+        
+        todaySchedule.setMember_id(loginMember.getMember_id());
+        scheduleMapper.saveToday(todaySchedule);
+        log.info("TodaySchedule: {}", todaySchedule);
+        
 		return "schedule/week";
    }
 }

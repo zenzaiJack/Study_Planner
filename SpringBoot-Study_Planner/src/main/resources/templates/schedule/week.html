@@ -77,7 +77,7 @@
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
                                 document.getElementById("obj");
-                                insert.submit();
+                                $('#insert').submit();
                             });
                             
                         }
@@ -104,9 +104,9 @@
                                         "end_time" : end_time,
                                     }//전송할 객체 생성
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                }
                                 document.getElementById("obj");
                                 today.submit();
+                                }
                             });
                         }
                     }
@@ -371,7 +371,9 @@
 								<div class="form-group">
 									
 									<select id="subjectse">
-									<option>Subject</option>
+									<th:block th:each="subject : ${subjects}">
+									<option name="subject" th:value="${subject}">[[${subject}]]</option>
+									</th:block>
 									</select><br>
 									<label for="taskId" class="col-form-label">Today Start Time</label> 
 									<input type="time" class="form-control" id="calendar_start_time" name="start_time">
@@ -389,40 +391,6 @@
 					</div>
 				</div>
     	</div>
-    	<!-- modal 추가 -->
-				<div class="modal fade" id="calendarModal2" tabindex="-1"
-					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Add Today Schedule</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<form action="month" method="Post" th:object="${TodaySchedule}" id="today">
-							<div class="modal-body">
-								<div class="form-group">
-									<label for="taskId" class="col-form-label">Subject</label> 
-									<input type="text" class="form-control" id="calendar_subject" name="subject"> 
-									<label for="taskId" class="col-form-label">Today Start Time</label> 
-                           			<input type="time" class="form-control" id="calendar_start_time" name="start_time">
-                           			<label for="taskId" class="col-form-label">Today End Time</label> 
-                           		<input type="time" class="form-control" id="calendar_end_time" name="end_time">
- 
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-warning" id="addCalendar"2>Add</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal" id="sprintSettingModalClose">Cancel</button>
-							</div>
-							</form>
-						</div>
-					</div>
-				</div>
     
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
