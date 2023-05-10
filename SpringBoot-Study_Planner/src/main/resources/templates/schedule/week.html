@@ -77,7 +77,7 @@
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
                                 document.getElementById("obj");
-                                insert.submit();
+                                $('#insert').submit();
                             });
                             
                         }
@@ -99,6 +99,7 @@
                                     alert("Please Add Time");
                                 }else{ // 정상적인 입력 시
                                     var obj = {
+                                		"title" : title,
                                         "subject" : subject,
                                         "start_time" : start_time,
                                         "end_time" : end_time,
@@ -330,7 +331,7 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
+							<form action="test" method="Post" th:object="${ScheduleWriteForm}" id="insert">
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="taskId" class="col-form-label">Schedule Conversation</label> 
@@ -366,7 +367,7 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
+							<form action="test" method="Post" th:object="${ScheduleWriteForm}" id="insert">
 							<div class="modal-body">
 								<div class="form-group">
 									<select id="subjectse">

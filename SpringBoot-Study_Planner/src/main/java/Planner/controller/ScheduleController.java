@@ -1,6 +1,7 @@
 package Planner.controller;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import Planner.Model.member.Member;
 import Planner.Model.member.RegisterForm;
 import Planner.Model.schedule.Schedule;
 import Planner.Model.schedule.ScheduleWriteForm;
+import Planner.Model.schedule.TodaySchedule;
 import Planner.repository.MemberMapper;
 import Planner.repository.ScheduleMapper;
 import lombok.RequiredArgsConstructor;
@@ -130,4 +132,36 @@ public class ScheduleController {
         log.info("Schedule: {}", schedule);
 		return "schedule/week";
    }
+	@PostMapping("test")
+	   public String test(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+	            @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
+	            BindingResult result, HashMap<String, String> param) {
+			log.info("param: {}", param);
+	       // 로그인 상태가 아니면 로그인 페이지로 보낸다.
+//	        if (loginMember == null) {
+//	            return "redirect:/member/login";
+//	        }
+	        log.info("ScheduleWriteForm: {}", scheduleWriteForm);
+	        // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
+	        if (result.hasErrors()) {
+	            return "schedule/week";
+	        }
+	        
+	        Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
+	        String member_id = loginMember.getMember_id();
+	        log.info("member_id : {}", member_id);
+	        schedule.setMember_id(loginMember.getMember_id());
+	        log.info("member_id : {}", member_id);
+	        log.info("loginMember.getMember_id : {}", loginMember.getMember_id());
+	        scheduleMapper.test1(schedule);
+	        for(int i = 0; i <= ChronoUnit.DAYS.between(schedule.getStart_date(), schedule.getEnd_date()); i++) {
+	        	TodaySchedule todaySchedule = new TodaySchedule();
+	        	todaySchedule.setMember_id(member_id);
+	        	todaySchedule.setSubject(schedule.getSubject());
+	        	todaySchedule.setToday(schedule.getStart_date().plusDays(i));
+	        	scheduleMapper.test2(todaySchedule);
+	        }
+	        log.info("Schedule: {}", schedule);
+			return "schedule/week";
+	}
 }
