@@ -25,6 +25,7 @@ import Planner.Model.member.Member;
 import Planner.Model.member.RegisterForm;
 import Planner.Model.schedule.Schedule;
 import Planner.Model.schedule.ScheduleWriteForm;
+import Planner.Model.schedule.TodaySchedule;
 import Planner.repository.MemberMapper;
 import Planner.repository.ScheduleMapper;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class ScheduleController {
 	}
 
 	
-	//월별 입력
+	//월별 스케쥴 입력
 	@PostMapping("month")
 	public String month(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("monthForm")ScheduleWriteForm scheduleWriteForm,
@@ -65,6 +66,23 @@ public class ScheduleController {
 		return "schedule/week";
 	}
 	
+	//month 하루일정 저장
+	@PostMapping("month")
+	public String monthToday(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+			@Validated @ModelAttribute("monthForm")TodaySchedule todaySchedule,
+			BindingResult result, HashMap<String, String> param) {
+		log.info("param: {}", param);
+		log.info("TodaySchedule: {}", todaySchedule);
+		// validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
+		if (result.hasErrors()) {
+			return "schedule/month";
+		}
+		
+		scheduleMapper.saveToday(todaySchedule);
+		log.info("TodaySchedule: {}", todaySchedule);
+		return "schedule/week";
+	}
+	
 			
 
 
@@ -77,33 +95,9 @@ public class ScheduleController {
 	}
 
 	
-	//주별 입력
+	//주별 스케쥴 입력
 
 
-//	@PostMapping("week")
-//	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
-//            @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
-//            BindingResult result) {
-//		 // 로그인 상태가 아니면 로그인 페이지로 보낸다.
-//        if (loginMember == null) {
-//            return "redirect:/member/login";
-//        }
-//
-//        log.info("weekForm: {}", scheduleWriteForm);
-//        // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
-//        if (result.hasErrors()) {
-//            return "schedule/week";
-//        }
-//        //날짜+시간 합치기
-//        LocalDateTime start_datetime = LocalDateTime.of(scheduleWriteForm.getStart_date().toLocalDate(), scheduleWriteForm.getStart_time().toLocalTime());
-//        LocalDateTime end_datetime = LocalDateTime.of(scheduleWriteForm.getEnd_date().toLocalDate(), scheduleWriteForm.getEnd_time().toLocalTime());
-//        scheduleWriteForm.setStart_date(start_datetime);
-//        scheduleWriteForm.setEnd_date(end_datetime);
-//        Schedule schedule = ScheduleWriteForm.toSchedule(scheduleWriteForm);
-//        schedule.setMember_id(loginMember.getMember_id());
-//        scheduleMapper.saveSchedule(schedule);
-//		return "schedule/week";
-//	}
 
 	@PostMapping("week")
    public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
@@ -130,4 +124,25 @@ public class ScheduleController {
         log.info("Schedule: {}", schedule);
 		return "schedule/week";
    }
+	
+	
+	@PostMapping("week")
+	public String weekToday(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+			@Validated @ModelAttribute("weekForm")TodaySchedule todaySchedule,
+			BindingResult result, HashMap<String, String> param) {
+		log.info("param: {}", param);
+		// 로그인 상태가 아니면 로그인 페이지로 보낸다.
+//        if (loginMember == null) {
+//            return "redirect:/member/login";
+//        }
+		log.info("TodaySchedule: {}", todaySchedule);
+		// validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
+		if (result.hasErrors()) {
+			return "schedule/week";
+		}
+		
+		scheduleMapper.saveToday(todaySchedule);
+		log.info("TodaySchedule: {}", todaySchedule);
+		return "schedule/week";
+	}
 }

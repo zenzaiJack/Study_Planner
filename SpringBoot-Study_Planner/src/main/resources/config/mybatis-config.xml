@@ -9,5 +9,6 @@
         <typeAlias type="Planner.Model.Subject" alias="subject"/>
         <typeAlias type="Planner.Model.timer.Timer" alias="timer"/>
         <typeAlias type="Planner.Model.timer.TimerForm" alias="timerForm"/>
+        <typeAlias type="Planner.Model.timer.TodaySchedule" alias="today"/>
     </typeAliases>
 </configuration>

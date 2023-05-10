@@ -372,6 +372,7 @@
 							<form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
 							<div class="modal-body">
 								<div class="form-group">
+									
 									<select id="subjectse">
 									<option>Subject</option>
 									</select><br>
@@ -404,7 +405,7 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form action="month" method="Post" th:object="${ScheduleWriteForm}" id="today">
+							<form action="month" method="Post" th:object="${TodaySchedule}" id="today">
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="taskId" class="col-form-label">Subject</label> 
