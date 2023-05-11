@@ -30,7 +30,7 @@
     select * from schedule
     </select>
     
-      <select id="findMember" resultType="TodaySchedule">
+      <select id="findMember" resultType="schedule">
         select * from schedule where member_id = #{member_id}
     </select>
     
@@ -57,6 +57,10 @@
     
       <select id="findToday" resultType="today">
         select * from schedule where member_id = #{member_id}
+    </select>
+    
+      <select id="findSubjectList" resultType="String">
+        select distinct subject from schedule where member_id = #{member_id}
     </select>
     
 </mapper>
