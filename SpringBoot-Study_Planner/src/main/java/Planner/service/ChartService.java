@@ -19,9 +19,11 @@ public class ChartService {
 			String study_date = list.get(i).getStudy_date();
 			array.add(study_date);
 		}
-		
-		
+	}
 	
-
+	// DB에서 개인 공부과목 들고오는 메소드
+	public List<String> getSubjectList(String member_id) {
+		List<String> list = timerMapper.getSubjectList(member_id);
+		return list;
 	}
 }

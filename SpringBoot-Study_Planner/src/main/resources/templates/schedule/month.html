@@ -105,7 +105,7 @@
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
                                 }
                                 document.getElementById("obj");
-                                today.submit();
+                                $('#today').submit();
                             });
                         }
                     }//
@@ -386,9 +386,10 @@
 							<form action="month" method="Post" th:object="${TodaySchedule}" id="today">
 							<div class="modal-body">
 								<div class="form-group">
+									<label for="taskId" class="col-form-label">Subject</label> 
 									<select id="subjectse">
 									<th:block th:each="subject : ${subjects}">
-									<option name="subject" th:value="${subject}">[[${subject}]]</option>
+									<option name="subject" th:value="${subject}" th:text="${subject}"></option>
 									</th:block>
 									</select><br> 
 									<label for="taskId" class="col-form-label">Today Start Time</label> 
