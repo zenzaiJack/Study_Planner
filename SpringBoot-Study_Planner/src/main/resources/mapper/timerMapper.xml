@@ -23,4 +23,5 @@
     <select id="getSubjectList" resultType="String">
     	select distinct subject from schedule where member_id = #{member_id}
     </select>
+    
 </mapper>

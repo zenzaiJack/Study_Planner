@@ -48,8 +48,7 @@
      </select>
      
      <select id="selectSubjectByMemberId" resultType="Timer">
-     	  select subject_name, sum(study_time) as study_time_sum
-    	  from timer
+     	  select subject_name, sum(study_time) as study_time_sum from timer
     	  where member_id = #{member_id}
     	  group by subject_name
      </select>

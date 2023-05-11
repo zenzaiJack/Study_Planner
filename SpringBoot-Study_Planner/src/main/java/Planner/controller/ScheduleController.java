@@ -37,24 +37,22 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ScheduleController {
 
-
 	private final ScheduleMapper scheduleMapper;
 
-	//달별 확인
+	// 달별 확인
 	@GetMapping("month")
 	public String monthForm(Model model) {
 		model.addAttribute("month", new Schedule());
 		return "schedule/month";
 	}
 
-	
-	//월별 스케쥴 입력
+	// 월별 스케쥴 입력
 	@PostMapping("month")
-	public String month(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+   public String month(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("monthForm")ScheduleWriteForm scheduleWriteForm,
 //            @Validated @ModelAttribute("monthForm")TodaySchedule todaySchedule,
             BindingResult result, HashMap<String, String> param) {
-		log.info("param: {}", param);
+      log.info("param: {}", param);
         log.info("ScheduleWriteForm: {}", scheduleWriteForm);
         // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
         if (result.hasErrors()) {
@@ -69,35 +67,29 @@ public class ScheduleController {
 //        todaySchedule.setMember_id(loginMember.getMember_id());
 //        scheduleMapper.saveToday(todaySchedule);
 //        log.info("TodaySchedule: {}", todaySchedule);
-        
-		return "schedule/month";
+        return"schedule/month";
 	}
-	
-			
 
-
-
-	//주별 확인
+	// 주별 확인
 	@GetMapping("week")
-	public String weekForm(Model model, @SessionAttribute("loginMember") Member loginMember) {
-		List<String> list = scheduleMapper.findSubjectList(loginMember.getMember_id());
-		model.addAttribute("week", new Schedule());
-		model.addAttribute("subject", list);
-		log.info("list : {}", list);
-		return "schedule/week";
-	}
-
-	
-	//주별 스케쥴 입력
+   public String weekForm(Model model, @SessionAttribute("loginMember") Member loginMember) {
+      List<String> list = scheduleMapper.findSubjectList(loginMember.getMember_id());
+      model.addAttribute("week", new Schedule());
+      model.addAttribute("subject", list);
+      log.info("list : {}", list);
+      return "schedule/week";
+   }
 
 
+
+	// 주별 스케쥴 입력
 
 	@PostMapping("week")
-   public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
 //            @Validated @ModelAttribute("weekForm")TodaySchedule todaySchedule,
             BindingResult result, HashMap<String, String> param) {
-		log.info("param: {}", param);
+      log.info("param: {}", param);
        // 로그인 상태가 아니면 로그인 페이지로 보낸다.
 //        if (loginMember == null) {
 //            return "redirect:/member/login";
@@ -116,9 +108,6 @@ public class ScheduleController {
 //        todaySchedule.setMember_id(loginMember.getMember_id());
 //        scheduleMapper.saveToday(todaySchedule);
 //        log.info("TodaySchedule: {}", todaySchedule);
-        
-        
-        
-		return "schedule/week";
+      return "schedule/week";
    }
 }

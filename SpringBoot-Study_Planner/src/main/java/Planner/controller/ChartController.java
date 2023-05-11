@@ -22,7 +22,7 @@ public class ChartController {
    @Autowired
     private TimerMapper timerMapper;
        
-      @GetMapping("/chart-data")
+       @GetMapping("/chart-data")
        @ResponseBody
        public Map<String, Object> getChartData(@SessionAttribute(value = "loginMember", required = false) Member loginMember) {
            Map<String, Object> data = new HashMap<>();

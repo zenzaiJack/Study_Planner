@@ -99,6 +99,7 @@
                                     alert("Please Add Time");
                                 }else{ // 정상적인 입력 시
                                     var obj = {
+                                		"title" : title,
                                         "subject" : subject,
                                         "start_time" : start_time,
                                         "end_time" : end_time,
@@ -152,7 +153,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
+           <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -182,7 +183,7 @@
                     </div>
                 </div>
             </li>
-
+            
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -330,7 +331,7 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
+							<form action="test" method="Post" th:object="${ScheduleWriteForm}" id="insert">
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="taskId" class="col-form-label">Schedule Conversation</label> 

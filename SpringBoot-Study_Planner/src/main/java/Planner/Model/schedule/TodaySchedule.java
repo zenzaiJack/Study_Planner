@@ -1,5 +1,7 @@
 package Planner.Model.schedule;
 
+
+
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
@@ -14,3 +16,4 @@ public class TodaySchedule {
 	@NotBlank
 	private String end_time;
 }
+

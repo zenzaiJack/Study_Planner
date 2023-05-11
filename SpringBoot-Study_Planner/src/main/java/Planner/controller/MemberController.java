@@ -1,5 +1,7 @@
 package Planner.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import Planner.Model.member.LoginForm;
 import Planner.Model.member.Member;
 import Planner.Model.member.RegisterForm;
 import Planner.repository.MemberMapper;
+import Planner.repository.TimerMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private final MemberMapper memberMapper;
+	private final TimerMapper timerMapper;
 	
 	@GetMapping("/")	// 로그인
 	public String login(Model model) {
@@ -49,9 +53,11 @@ public class MemberController {
 			result.reject("loginError", "아이디가 없거나 패스워드가 다릅니다.");
 			return "redirect:/";
 		}
-		
 		HttpSession session = request.getSession();
 		session.setAttribute("loginMember", member);			
+		
+		List<String> list = timerMapper.getSubjectList(loginForm.getMember_id());
+		model.addAttribute("subjects", list);
 		return "working/index";
 	}
 	
