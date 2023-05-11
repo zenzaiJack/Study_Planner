@@ -13,64 +13,54 @@
             title,
             subject,
             start_date,
-            end_date,
-            start_time,
-            end_time
+            end_date
+            
         ) values (
            #{schedule_num},
            #{member_id},
-           #{title},
-           #{subject},
-           #{start_date},
-           #{end_date},
-           #{start_time},
-           #{end_time}
+            #{title},
+            #{subject},
+            #{start_date},
+            #{end_date}
+           
         )
     </insert>
     
     <select id="findfindSchedules" resultType="schedule">
-    	select * from schedule
+    select * from schedule
     </select>
     
       <select id="findMember" resultType="schedule">
         select * from schedule where member_id = #{member_id}
     </select>
-
-    <insert id="test1">
-        <selectKey keyProperty="schedule_num" resultType="long" order="BEFORE">
-           select seq_schedule.nextval from dual
-        </selectKey>
-    insert into test1 (
-          schedule_num,
+    
+       <!-- 오늘 쉐쥴 -->
+    <insert id="saveToday">
+    insert into schedule (
            member_id,
-            title,
             subject,
-            start_date,
-            end_date
+            start_time,
+            end_time
+            
         ) values (
-           #{schedule_num},
            #{member_id},
-           #{title},
-           #{subject},
-           #{start_date},
-           #{end_date}
+            #{subject},
+            #{start_time},
+            #{end_time}
+           
         )
     </insert>
     
-    <insert id="test2">
-        <selectKey keyProperty="subject_num" resultType="long" order="BEFORE">
-           select seq_subject.nextval from dual
-        </selectKey>
-    insert into test2 (
-           subject_num,
-           member_id,
-            subject,
-            today
-        ) values (
-           #{subject_num},
-           #{member_id},
-           #{subject},
-           #{today}
-        )
-    </insert>
+    <select id="findfindToday" resultType="today">
+    select * from schedule
+    </select>
+    
+      <select id="findToday" resultType="today">
+        select * from schedule where member_id = #{member_id}
+    </select>
+    
+      <select id="findSubjectList" resultType="String">
+        select distinct subject from schedule where member_id = #{member_id}
+    </select>
+    
 </mapper>

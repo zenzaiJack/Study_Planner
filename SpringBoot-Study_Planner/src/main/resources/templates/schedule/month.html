@@ -75,9 +75,9 @@
                                         "end_date" : end_date,
                                     }//전송할 객체 생성
                                     console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                }
                                 document.getElementById("obj");
-                                insert.submit();
+                                $('#insert').submit();
+                                }
                             });
                         }
                     },//
@@ -383,11 +383,13 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form action="month" method="Post" th:object="${ScheduleWriteForm}" id="today">
+							<form action="month" method="Post" th:object="${TodaySchedule}" id="today">
 							<div class="modal-body">
 								<div class="form-group">
 									<select id="subjectse">
-									<option>Subject</option>
+									<th:block th:each="subject : ${subjects}">
+									<option name="subject" th:value="${subject}">[[${subject}]]</option>
+									</th:block>
 									</select><br> 
 									<label for="taskId" class="col-form-label">Today Start Time</label> 
                            			<input type="time" class="form-control" id="calendar_start_time" name="start_time">
