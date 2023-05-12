@@ -37,7 +37,7 @@
        <!-- 오늘 쉐쥴 -->
     <insert id="saveToday">
     insert into schedule (
-           member_id,
+           	member_id,
             subject,
             start_time,
             end_time
