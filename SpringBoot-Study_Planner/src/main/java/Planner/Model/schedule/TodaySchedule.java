@@ -10,6 +10,7 @@ import lombok.Data;
 
 @Data
 public class TodaySchedule {
+	private long subject_num;
 	private String member_id;
 	@NotBlank
 	private String subject;

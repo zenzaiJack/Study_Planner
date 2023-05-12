@@ -76,6 +76,7 @@ public class ScheduleController {
    public String weekForm(Model model, @SessionAttribute("loginMember") Member loginMember) {
       List<String> list = scheduleMapper.findSubjectList(loginMember.getMember_id());
       model.addAttribute("week", new Schedule());
+      model.addAttribute("todaySchedule", new TodaySchedule());
       model.addAttribute("subject", list);
       log.info("list : {}", list);
       return "schedule/week";
@@ -88,7 +89,7 @@ public class ScheduleController {
 	@PostMapping("week")
 	public String week(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @Validated @ModelAttribute("weekForm")ScheduleWriteForm scheduleWriteForm,
-//            @Validated @ModelAttribute("weekForm")TodaySchedule todaySchedule,
+            @Validated @ModelAttribute("todaySchedule")TodaySchedule todaySchedule,
             BindingResult result, HashMap<String, String> param) {
 		log.info("param: {}", param);
        // 로그인 상태가 아니면 로그인 페이지로 보낸다.
@@ -107,7 +108,6 @@ public class ScheduleController {
         log.info("Schedule: {}", schedule);
         
         for(int i = 0; i <= ChronoUnit.DAYS.between(schedule.getStart_date(), schedule.getEnd_date()); i++) {
-        	TodaySchedule todaySchedule = new TodaySchedule();
         	todaySchedule.setMember_id(schedule.getMember_id());
         	todaySchedule.setSubject(schedule.getSubject());
         	todaySchedule.setToday(schedule.getStart_date().plusDays(i));

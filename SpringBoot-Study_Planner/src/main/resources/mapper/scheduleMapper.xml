@@ -36,20 +36,23 @@
     
        <!-- 오늘 쉐쥴 -->
     <insert id="saveToday">
+    <selectKey keyProperty="subject_num" resultType="long" order="BEFORE">
+    	select seq_subject.nextval from dual
+    </selectKey>
     insert into today_schedule (
+    		subject_num,
            	member_id,
             subject,
             today,
             start_time,
             end_time
-            
         ) values (
+        	#{subejct_num},
            #{member_id},
             #{subject},
-            #{today},
-            #{start_time},
-            #{end_time}
-           
+            #{today}
+        	#{start_time},
+        	#{end_time}
         )
     </insert>
     
