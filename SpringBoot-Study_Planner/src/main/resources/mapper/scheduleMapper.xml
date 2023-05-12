@@ -43,16 +43,12 @@
     		subject_num,
            	member_id,
             subject,
-            today,
-            start_time,
-            end_time
+            today
         ) values (
-        	#{subejct_num},
-           #{member_id},
+        	#{subject_num},
+           	#{member_id},
             #{subject},
             #{today}
-        	#{start_time},
-        	#{end_time}
         )
     </insert>
     

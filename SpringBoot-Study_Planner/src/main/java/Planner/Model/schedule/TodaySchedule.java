@@ -1,7 +1,5 @@
 package Planner.Model.schedule;
 
-
-
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
