@@ -1,6 +1,7 @@
 package Planner.controller;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 
@@ -105,9 +106,13 @@ public class ScheduleController {
         scheduleMapper.saveSchedule(schedule);
         log.info("Schedule: {}", schedule);
         
-//        todaySchedule.setMember_id(loginMember.getMember_id());
-//        scheduleMapper.saveToday(todaySchedule);
-//        log.info("TodaySchedule: {}", todaySchedule);
+        for(int i = 0; i <= ChronoUnit.DAYS.between(schedule.getStart_date(), schedule.getEnd_date()); i++) {
+        	TodaySchedule todaySchedule = new TodaySchedule();
+        	todaySchedule.setMember_id(schedule.getMember_id());
+        	todaySchedule.setSubject(schedule.getSubject());
+        	todaySchedule.setToday(schedule.getStart_date().plusDays(i));
+        	scheduleMapper.saveToday(todaySchedule);
+        }
       return "schedule/week";
    }
 }

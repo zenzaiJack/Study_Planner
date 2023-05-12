@@ -36,15 +36,17 @@
     
        <!-- 오늘 쉐쥴 -->
     <insert id="saveToday">
-    insert into schedule (
-           member_id,
+    insert into today_schedule (
+           	member_id,
             subject,
+            today,
             start_time,
             end_time
             
         ) values (
            #{member_id},
             #{subject},
+            #{today},
             #{start_time},
             #{end_time}
            
@@ -52,7 +54,7 @@
     </insert>
     
     <select id="findfindToday" resultType="today">
-    select * from schedule
+    	select * from schedule
     </select>
     
       <select id="findToday" resultType="today">
@@ -63,4 +65,13 @@
         select distinct subject from schedule where member_id = #{member_id}
     </select>
     
+    <update id="updateToday">
+    	update today_schedule set (
+    		start_time,
+    		end_time
+    	) values (
+    		#{start_time},
+    		#{end_time}
+    	) where subject = #{subject} and today = #{today}
+    </update>
 </mapper>
