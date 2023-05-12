@@ -113,6 +113,7 @@ public class ScheduleController {
         	todaySchedule.setToday(schedule.getStart_date().plusDays(i));
         	scheduleMapper.saveToday(todaySchedule);
         }
+        
       return "schedule/week";
    }
 }

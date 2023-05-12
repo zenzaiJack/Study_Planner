@@ -7,9 +7,9 @@
         <selectKey keyProperty="schedule_num" resultType="long" order="BEFORE">
            select seq_schedule.nextval from dual
         </selectKey>
-    insert into schedule (
-          schedule_num,
-           member_id,
+   		 insert into schedule (
+          	schedule_num,
+           	member_id,
             title,
             subject,
             start_date,
@@ -27,7 +27,7 @@
     </insert>
     
     <select id="findfindSchedules" resultType="schedule">
-    select * from schedule
+    	select * from schedule
     </select>
     
       <select id="findMember" resultType="schedule">

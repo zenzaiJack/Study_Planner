@@ -18,5 +18,6 @@ public interface ScheduleMapper {
    List<TodaySchedule> findfindToday(TodaySchedule todaySchedule);
    public List<String> findSubjectList(String member_id);
    
+   
    public void updateToday(TodaySchedule todaySchedule);
 }

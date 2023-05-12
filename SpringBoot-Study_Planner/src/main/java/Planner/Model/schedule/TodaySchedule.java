@@ -15,6 +15,5 @@ public class TodaySchedule {
 	private LocalDate today;
 	private String start_time;
 	private String end_time;
-	
 }
 
