@@ -36,23 +36,32 @@
     
        <!-- 오늘 쉐쥴 -->
     <insert id="saveToday">
+<<<<<<< HEAD
     insert into schedule (
+=======
+    <selectKey keyProperty="subject_num" resultType="long" order="BEFORE">
+    	select seq_subject.nextval from dual
+    </selectKey>
+    insert into today_schedule (
+    		subject_num,
+>>>>>>> branch 'master' of https://github.com/zenzaiJack/Study_Planner.git
            	member_id,
             subject,
+            today,
             start_time,
             end_time
-            
         ) values (
+        	#{subejct_num},
            #{member_id},
             #{subject},
-            #{start_time},
-            #{end_time}
-           
+            #{today}
+        	#{start_time},
+        	#{end_time}
         )
     </insert>
     
     <select id="findfindToday" resultType="today">
-    select * from schedule
+    	select * from schedule
     </select>
     
       <select id="findToday" resultType="today">
@@ -63,4 +72,13 @@
         select distinct subject from schedule where member_id = #{member_id}
     </select>
     
+    <update id="updateToday">
+    	update today_schedule set (
+    		start_time,
+    		end_time
+    	) values (
+    		#{start_time},
+    		#{end_time}
+    	) where subject = #{subject} and today = #{today}
+    </update>
 </mapper>
