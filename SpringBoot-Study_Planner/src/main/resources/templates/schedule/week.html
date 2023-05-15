@@ -19,15 +19,15 @@
     <!-- Custom styles for this template-->
     <link href="css/BootstrapBasic.css" rel="stylesheet">
     <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	
-	<!-- fullcalendar -->
+   src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   
+   <!-- fullcalendar -->
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+   href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
 <script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+   src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
 
 
 <script type="text/javascript">
@@ -35,101 +35,171 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 timeZone: 'UTC',
-                initialView: 'dayGridWeek', // 홈페이지에서 다른 형태의 view를 확인할  수 있다.
-                events:[ // 일정 데이터 추가 , DB의 event를 가져오려면 JSON 형식으로 변환해 events에 넣어주면된다.
-                    {
-                        title:'Schedule',
-                        subject:'Subject',
-                        start:'2023-04-01 00:00:00',
-                        end:'2023-04-03 24:00:00' 
-                    }
-                ], headerToolbar: {
-                    center: 'addEventButton addTodayButton', // headerToolbar에 버튼을 추가
-                    rignt: 'addTodayButton'
-                }, customButtons: {
-                    addEventButton: { // 추가한 버튼 설정
-                        text : "Add Schedule",  // 버튼 내용
-                        click : function(){ // 버튼 클릭 시 이벤트 추가
-                            $("#calendarModal").modal("show"); // modal 나타내기
-                            
-                            $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
-                                var content = $("#calendar_content").val();
-                                var subject = $("#calendar_subject").val();
-                                var start_date = $("#calendar_start_date").val();
-                                var end_date = $("#calendar_end_date").val();
-                                
-                                //내용 입력 여부 확인
-                                if(content == null || content == ""){
-                                    alert("Please Add Content");
-                                }else if(subject == null || subject == ""){
-                                    alert("Please Add Content");
-                                }else if(start_date == "" || end_date ==""){
-                                    alert("Please Add Date");
-                                }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
-                                    alert("End Date is Before Start Date");
-                                }else{ // 정상적인 입력 시
-                                    var obj = {
-                                        "title" : content,
-                                        "subject" : subject,
-                                        "start_date" : start_date,
-                                        "end_date" : end_date,
-                                    }//전송할 객체 생성
-                                    console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                }
-                                document.getElementById("obj");
-                                $('#insert').submit();
-                            });
-                            
-                        }
-                    },//
-                    addTodayButton: { // 추가한 버튼 설정
-                        text : "Add Time",  // 버튼 내용
-                        click : function(){ // 버튼 클릭 시 이벤트 추가
-                            $("#calendarModal2").modal("show"); // modal 나타내기
-                            
-                            $("#addCalendar2").on("click",function(){  // modal의 추가 버튼 클릭 시
-                                var subject = $("#calendar_subject").val();
-                                var start_time = $("#calendar_start_time").val();
-                                var end_time = $("#calendar_end_time").val();
-
-                                //내용 입력 여부 확인
-                                if(subject == null || subject == ""){
-                                    alert("Please Add Content");
-                                }else if(start_time == "" || end_time ==""){
-                                    alert("Please Add Time");
-                                }else{ // 정상적인 입력 시
-                                    var obj = {
-                                		"title" : title,
-                                        "subject" : subject,
-                                        "start_time" : start_time,
-                                        "end_time" : end_time,
-                                    }//전송할 객체 생성
-                                    console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                document.getElementById("obj");
-                                $('#today').submit();
-                                }
-                            });
-                        }
-                    }
+                initialView: 'timeGridWeek', // 홈페이지에서 다른 형태의 view를 확인할  수 있다.
+        		events : loadEventsFromStorage(),
+        		
+        		headerToolbar : {
+        			center: 'addEventButton addTodayButton', // headerToolbar에 버튼을 추가
                 },
-                
-                editable: true, // false로 변경 시 draggable 작동 x 
-                displayEventTime: true // 시간 표시 
-            });
-            calendar.render();
+        		customButtons : {
+        			addEventButton : {
+        				 text : "Add Schedule",  // 버튼 내용
+                         click : function(){ // 버튼 클릭 시 이벤트 추가
+                        	 calendar.refetchEvents();
+                             $("#calendarModal").modal("show"); // modal 나타내기
+                             
+                             $("#addCalendar").off("click").on("click",function(){  // modal의 추가 버튼 클릭 시
+                                 var content = $("#calendar_content").val();
+                                 var subject = $("#calendar_subject").val();
+                                 var start_date = $("#calendar_start_date").val();
+                                 var end_date = $("#calendar_end_date").val();
+                                 var colors = ['#86C7F3', '#FDB813', '#F275A8', '#A9DF9C'];
+                                 var randomColor = colors[Math.floor(Math.random() * colors.length)];
+                                 
+                                 //내용 입력 여부 확인
+                                 if(content == null || content == ""){
+                                     alert("Please Add Content");
+                                 }else if(subject == null || subject == ""){
+                                     alert("Please Add subject");
+                                 }else if(start_date == "" || end_date ==""){
+                                     alert("Please Add Date");
+                                 }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
+                                     alert("End Date is Before Start Date");
+                                 }else{ // 정상적인 입력 시
+                                	var start = start_date + 'T' + '00:00:00';
+                     				var end = end_date + 'T' + '24:00:00';
+                                     var obj = {
+                                    		 "title" : content,
+                                    		    "subject" : subject,
+                                    		    "start" : start,
+                                    		    "end" : end,
+                                      		   "allDay": true,
+                                      			"backgroundColor": randomColor
+                                     }//전송할 객체 생성
+                                    calendar.addEvent(obj);
+                     				saveEventsToStorage();
+                     				$("#calendarModal").modal("hide"); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                 }
+                                 $('#insert').submit();
+                             });
+                             
+                         }
+                     },
+
+                     addTodayButton: { // 추가한 버튼 설정
+                         text : "Add Time",  // 버튼 내용
+                         click : function(){ // 버튼 클릭 시 이벤트 추가
+                        	 calendar.refetchEvents();
+                             $("#calendarModal2").modal("show"); // modal 나타내기
+                             
+                             $("#addTdCalendar2").on("click",function(){  // modal의 추가 버튼 클릭 시
+                                 var subject = $("#subjectse").val();
+                                 var start_time = $("#calendar_start_time").val();
+                                 var end_time = $("#calendar_end_time").val();
+                                 console.log(subject);
+                                 //내용 입력 여부 확인
+                                 if(subject == null || subject == ""){
+                                     alert("Please Add subject");
+                                 }else if(start_time == "" || end_time ==""){
+                                     alert("Please Add Time");
+                                 }else if (new Date(end_time) - new Date(start_time) < 0) { // 종료시간이 시작시간보다 먼저인 경우
+                     			    alert("End Time is Before Start Time");
+                     			} else{ // 정상적인 입력 시
+
+                                     var obj = {
+                                         "subject" : subject,
+                                         "start_time" : start_time,
+                                         "end_time" : end_time
+                                     }//전송할 객체 생성
+                                     calendar.addEvent(obj);
+                     				saveEventsToStorage();
+
+                                 }             				
+                                 $("#calendarModal").modal("hide"); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                 today.submit();
+                             });
+                         }
+                     }
+                 },
+                 eventClick: function(info) {
+                	    // 이벤트 클릭 시 수정/삭제 모달 창 열기
+                	    $("#editCalendarModal").modal("show");
+                	    // 모달 내용 채우기
+                	    $("#calendarTitle").val(info.event.title);
+                	    $("#calendarDate").val(info.event.startStr);
+                	    $("#calendarId").val(info.event.id);
+                	},
+        		
+                 
+                 editable: false, // false로 변경 시 draggable 작동 x 
+                 displayEventTime: false // 시간 표시 
+             });
+
+        	function saveEventsToStorage() {
+        	    var events = calendar.getEvents().map(function(event) {
+        	        return {
+        	            title : event.title,
+        	            start : event.start,
+        	            end : event.end,
+        	            allDay : event.allDay,
+        	            subject : event.extendedProps.subject
+        	        };
+        	    });
+        	    localStorage.setItem('calendarEvents', JSON.stringify(events));
+        	}
+
+        	function loadEventsFromStorage() {
+        	    var events = localStorage.getItem('calendarEvents');
+        	    if (events) {
+        	        events = JSON.parse(events);
+        	        events.forEach(function(event) {
+        	            event.backgroundColor = event.backgroundColor || ['#86C7F3', '#FDB813', '#F275A8', '#A9DF9C'][Math.floor(Math.random() * 4)];
+        	        });
+        	        return events;
+        	    } else {
+        	        return [];
+        	    }
+        	}
+
+
+        	calendar.render();
         });
     </script>
+   	<script th:inline="javascript">
+    // subject 요소의 변경 사항을 감지하고 start-date 요소를 업데이트합니다.
+    document.getElementById("subject").addEventListener("change", function() {
+        var subjectValue = this.value;
+        var startDateOptions = document.getElementById("start-date").options;
+        for (var i = 0; i < startDateOptions.length; i++) {
+            var option = startDateOptions[i];
+            // option의 value가 선택한 subject와 일치하면 해당 option을 보이게 하고, 그렇지 않으면 숨깁니다.
+            if (option.value === subjectValue) {
+                option.style.display = "";
+            } else {
+                option.style.display = "none";
+            }
+        }
+    });
+	</script>
+	<script>
+  function changeSelection() {
+    var selectedSubject = $('#subjectse').val();
+    $('#today option').hide().filter(function() {
+      return $(this).text().indexOf(selectedSubject) > -1;
+    }).show();
+  }
+</script>
 <style>
 #calendarBox {
-	width: 65%;
-	padding-left: 2%;
+   width: 65%;
+   padding-left: 2%;
 }
 </style>
 
 <style>
 #subjectse {
-	width: 465px;
-	height: 40px;
+   width: 465px;
+   height: 40px;
 }
 </style>
 </head>
@@ -153,7 +223,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-           <!-- Nav Item - Dashboard -->
+            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -183,7 +253,7 @@
                     </div>
                 </div>
             </li>
-            
+
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -313,85 +383,92 @@
 
 
             <!-- End of Main Content -->
-			<!-- 캘린더 밑에 넣고 싶을때!!! -->
-				<div id="calendarBox">
-					<div id="calendar"></div>
-				</div>
+         <!-- 캘린더 밑에 넣고 싶을때!!! -->
+            <div id="calendarBox">
+               <div id="calendar"></div>
+            </div>
 
-				<!-- modal 추가 -->
-				<div class="modal fade" id="calendarModal" tabindex="-1"
-					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Add Schedule</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
-							<div class="modal-body">
-								<div class="form-group">
-									<label for="taskId" class="col-form-label">Schedule Conversation</label> 
-									<input type="text" class="form-control" id="calendar_content" name="title"> 
-									<label for="taskId" class="col-form-label">Subject</label> 
-									<input type="text" class="form-control" id="calendar_subject" name="subject"> 
-									<label for="taskId" class="col-form-label">Start Date</label> 
-									<input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
-									<label for="taskId" class="col-form-label">End Date</label> 
-									<input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-warning" id="addCalendar">Add</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal" id="sprintSettingModalClose">Cancel</button>
-							</div>
-							</form>
-						</div>
-					</div>
-				</div>
+            <!-- modal 추가 -->
+            <div class="modal fade" id="calendarModal" tabindex="-1"
+               role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Schedule</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                           aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <form action="week" method="Post" th:object="${ScheduleWriteForm}" id="insert">
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label for="taskId" class="col-form-label">Schedule Conversation</label> 
+                           <input type="text" class="form-control" id="calendar_content" name="title"> 
+                           <label for="taskId" class="col-form-label">Subject</label> 
+                           <input type="text" class="form-control" id="calendar_subject" name="subject"> 
+                           <label for="taskId" class="col-form-label">Start Date</label> 
+                           <input type="date" class="form-control" id="calendar_start_date" name="start_date"> 
+                           <label for="taskId" class="col-form-label">End Date</label> 
+                           <input type="date" class="form-control" id="calendar_end_date" name="end_date"> 
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" id="addCalendar">Add</button>
+                        <button type="button" class="btn btn-secondary"
+                           data-dismiss="modal" id="sprintSettingModalClose">Cancel</button>
+                     </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
     </div>
-				<!-- modal 추가 -->
-				<div class="modal fade" id="calendarModal2" tabindex="-1"
-					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Add ToDay Schedule</h5>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<form action="week" method="Post" th:object="${TodaySchedule}" id="today">
-							<div class="modal-body">
-								<div class="form-group">
-									<label for="taskId" class="col-form-label">Subject</label> 
-									<select id="subjectse">
-										<th:block th:each="subject : ${subjects}">
-											<option name="subject" th:value="${subject}" th:text="${subject}"></option>
-											 </th:block>
-									</select><br>
-									<label for="taskId" class="col-form-label">Today Start Time</label> 
-									<input type="time" class="form-control" id="calendar_start_time" name="start_time">
-									<label for="taskId" class="col-form-label">ToDay End Time</label> 
-									<input type="time" class="form-control" id="calendar_end_time" name="end_time">
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-warning" id="addTdCalendar">Add</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal" id="sprintSettingModalClose">Cancel</button>
-							</div>
-							</form>
-						</div>
-					</div>
-				</div>
-    	</div>
+            <!-- modal 추가 -->
+            <div class="modal fade" id="calendarModal2" tabindex="-1"
+               role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add ToDay Schedule</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                           aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <form action="today" method="Post" th:object="${TodaySchedule}" id="today">
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label for="taskId" class="col-form-label">Subject</label> 
+                           <select id="subjectse" name="subject" onchange="changeSeletion()">
+                              <th:block th:each="sub : ${subject}">                        
+                                 <option th:name="${subject}" th:value="${sub}" th:text="${sub}"></option>
+                              </th:block>
+                           </select><br>
+                           <label for="taskId" class="col-form-label">Start Date</label> 
+                           <select id="subjectse">
+                                 <option>Choice Date</option>
+                              <th:block th:each="today :	 ${today}">
+                                 <option th:value="${today.today}" th:text="${today.today}"></option>
+                              </th:block>
+                           </select><br>
+                           <label for="taskId" class="col-form-label">Today Start Time</label> 
+                           <input type="time" class="form-control" id="calendar_start_time" name="start_time">
+                           <label for="taskId" class="col-form-label">ToDay End Time</label> 
+                           <input type="time" class="form-control" id="calendar_end_time" name="end_time">
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" id="addTdCalendar2">Add</button>
+                        <button type="button" class="btn btn-secondary"
+                           data-dismiss="modal" id="sprintSettingModalClose">Cancel</button>
+                     </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+       </div>
     
             <!-- Footer -->
             <footer class="sticky-footer bg-white">

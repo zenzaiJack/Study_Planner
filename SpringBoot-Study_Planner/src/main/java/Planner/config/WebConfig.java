@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 	
-    private String[] excludePaths = {"forgot-password", "/register", "/login", "/logout", 
+    private String[] excludePaths = {"forgot-password", "/register", "/", "/logout", 
     								"/css/**",  "/js/**", "/scss/**", "/vendor/**","/*.ico", "/error"};
 
     @Override
@@ -22,6 +22,7 @@ public class WebConfig implements WebMvcConfigurer{
     	registry.addInterceptor(new LoginCheckIntercepter()).order(1).addPathPatterns("/**").excludePathPatterns(excludePaths);
     }
 	
+    
     @Override
     public void addCorsMappings(CorsRegistry registry) {
             registry.addMapping("/**")

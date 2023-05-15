@@ -73,4 +73,8 @@
     		#{end_time}
     	) where subject = #{subject} and today = #{today}
     </update>
+    
+    <select id="findTodayList" resultType="TodayScheduleResult">
+    	select * from today_schedule where member_id = #{member_id}
+    </select>
 </mapper>

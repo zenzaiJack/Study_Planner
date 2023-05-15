@@ -28,6 +28,7 @@ import Planner.Model.member.RegisterForm;
 import Planner.Model.schedule.Schedule;
 import Planner.Model.schedule.ScheduleWriteForm;
 import Planner.Model.schedule.TodaySchedule;
+import Planner.Model.schedule.TodayScheduleResult;
 import Planner.repository.MemberMapper;
 import Planner.repository.ScheduleMapper;
 import lombok.RequiredArgsConstructor;
@@ -71,16 +72,17 @@ public class ScheduleController {
         return"schedule/month";
 	}
 
-	// 주별 확인
-	@GetMapping("week")
-   public String weekForm(Model model, @SessionAttribute("loginMember") Member loginMember) {
-      List<String> list = scheduleMapper.findSubjectList(loginMember.getMember_id());
-      model.addAttribute("week", new Schedule());
-      model.addAttribute("todaySchedule", new TodaySchedule());
-      model.addAttribute("subject", list);
-      log.info("list : {}", list);
-      return "schedule/week";
-   }
+	//주별 확인
+	   @GetMapping("week")
+	   public String weekForm(Model model, @SessionAttribute("loginMember") Member loginMember) {
+	      List<String> list = scheduleMapper.findSubjectList(loginMember.getMember_id());
+	      List<TodayScheduleResult> slist = scheduleMapper.findTodayList(loginMember.getMember_id());
+	      model.addAttribute("week", new Schedule());
+	      model.addAttribute("subject", list);
+	      model.addAttribute("today", slist);
+	      log.info("list : {}", list);
+	      return "schedule/week";
+	   }
 
 
 
@@ -116,4 +118,22 @@ public class ScheduleController {
         
       return "schedule/week";
    }
+	
+	@PostMapping("today")
+	   public String Today(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+	               @Validated @ModelAttribute("weekForm")TodaySchedule todaySchedule,
+	               @ModelAttribute("subject") List<String> list,
+	               @ModelAttribute("today") List<TodayScheduleResult> today,
+	                  BindingResult result, HashMap<String, String> param) {
+	         log.info("param: {}", param);
+	          if (result.hasErrors()) {
+	               return "redirect:/week";
+	           }
+	          
+	           todaySchedule.setMember_id(loginMember.getMember_id());
+	           scheduleMapper.saveToday(todaySchedule);
+	           log.info("TodaySchedule: {}", todaySchedule);
+	           return "schedule/week";
+	      
+	   }
 }

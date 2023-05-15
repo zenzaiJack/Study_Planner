@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 import Planner.Model.schedule.Schedule;
 import Planner.Model.schedule.TodaySchedule;
+import Planner.Model.schedule.TodayScheduleResult;
 
 @Mapper
 public interface ScheduleMapper {
@@ -17,7 +18,7 @@ public interface ScheduleMapper {
    public Schedule findToday(String member_id);
    List<TodaySchedule> findfindToday(TodaySchedule todaySchedule);
    public List<String> findSubjectList(String member_id);
-   
+   public List<TodayScheduleResult> findTodayList(String member_id);
    
    public void updateToday(TodaySchedule todaySchedule);
 }
