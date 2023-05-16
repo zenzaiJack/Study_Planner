@@ -2,6 +2,7 @@ package Planner.controller;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import Planner.Model.member.RegisterForm;
 import Planner.Model.schedule.Schedule;
 import Planner.Model.schedule.ScheduleWriteForm;
 import Planner.Model.schedule.TodaySchedule;
+import Planner.Model.schedule.TodayScheduleForm;
 import Planner.Model.schedule.TodayScheduleResult;
 import Planner.repository.MemberMapper;
 import Planner.repository.ScheduleMapper;
@@ -78,6 +80,7 @@ public class ScheduleController {
 	      List<String> list = scheduleMapper.findSubjectList(loginMember.getMember_id());
 	      List<TodayScheduleResult> slist = scheduleMapper.findTodayList(loginMember.getMember_id());
 	      model.addAttribute("week", new Schedule());
+	      model.addAttribute("todayForm", new TodayScheduleForm());
 	      model.addAttribute("subject", list);
 	      model.addAttribute("today", slist);
 	      log.info("list : {}", list);
@@ -121,18 +124,16 @@ public class ScheduleController {
 	
 	@PostMapping("today")
 	   public String Today(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
-	               @Validated @ModelAttribute("weekForm")TodaySchedule todaySchedule,
-	               @ModelAttribute("subject") List<String> list,
-	               @ModelAttribute("today") List<TodayScheduleResult> today,
-	                  BindingResult result, HashMap<String, String> param) {
+	               @Validated @ModelAttribute("todayForm")TodayScheduleForm todayScheduleForm,
+	               BindingResult result, HashMap<String, String> param) {
 	         log.info("param: {}", param);
 	          if (result.hasErrors()) {
 	               return "redirect:/week";
 	           }
 	          
-	           todaySchedule.setMember_id(loginMember.getMember_id());
-	           scheduleMapper.saveToday(todaySchedule);
-	           log.info("TodaySchedule: {}", todaySchedule);
+	          todayScheduleForm.setMember_id(loginMember.getMember_id());
+	           scheduleMapper.updateToday(todayScheduleForm);
+	           log.info("TodaySchedule: {}", todayScheduleForm);
 	           return "schedule/week";
 	      
 	   }

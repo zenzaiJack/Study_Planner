@@ -93,7 +93,8 @@
                              $("#calendarModal2").modal("show"); // modal 나타내기
                              
                              $("#addTdCalendar2").on("click",function(){  // modal의 추가 버튼 클릭 시
-                                 var subject = $("#subjectse").val();
+                                 var subject = $("#subjectSelect").val();
+                             	 var today = $("#subjectse option:selected").val();
                                  var start_time = $("#calendar_start_time").val();
                                  var end_time = $("#calendar_end_time").val();
                                  console.log(subject);
@@ -108,6 +109,7 @@
 
                                      var obj = {
                                          "subject" : subject,
+                                         "today" : today,
                                          "start_time" : start_time,
                                          "end_time" : end_time
                                      }//전송할 객체 생성
@@ -116,7 +118,7 @@
 
                                  }             				
                                  $("#calendarModal").modal("hide"); //서버로 해당 객체를 전달해서 DB 연동 가능
-                                 today.submit();
+                                 $('#today').submit();
                              });
                          }
                      }
@@ -165,29 +167,50 @@
         	calendar.render();
         });
     </script>
-   	<script th:inline="javascript">
-    // subject 요소의 변경 사항을 감지하고 start-date 요소를 업데이트합니다.
-    document.getElementById("subject").addEventListener("change", function() {
-        var subjectValue = this.value;
-        var startDateOptions = document.getElementById("start-date").options;
-        for (var i = 0; i < startDateOptions.length; i++) {
-            var option = startDateOptions[i];
-            // option의 value가 선택한 subject와 일치하면 해당 option을 보이게 하고, 그렇지 않으면 숨깁니다.
-            if (option.value === subjectValue) {
-                option.style.display = "";
-            } else {
-                option.style.display = "none";
-            }
-        }
-    });
-	</script>
 	<script>
-  function changeSelection() {
-    var selectedSubject = $('#subjectse').val();
-    $('#today option').hide().filter(function() {
-      return $(this).text().indexOf(selectedSubject) > -1;
-    }).show();
-  }
+	function changeSelection() {
+		  console.log("실행");
+		  const subjectSelect = document.getElementById('subjectSelect');
+		  console.log(subjectSelect);
+		  const todayScheduleDiv = document.getElementById('subjectse');
+
+		  const selectedSubject = $("#subjectSelect option:selected").val();
+		  if (!selectedSubject) return;
+
+		  $.ajax({
+		    type: 'get',
+		    url: '/api/today',
+		    data: {
+		      subject: selectedSubject
+		    },
+		    dataType: 'json',
+		    success: function(response) { // Corrected variable name from "data" to "response"
+		      var subjectSelect = document.getElementById('subjectSelect'); // Corrected variable name from "subjectse" to "subjectSelect"
+
+		      // 응답 데이터를 순회하며 옵션을 추가
+		      response.forEach(function(obj) {
+		      var option = document.createElement('option');
+		      option.name = 'todaySelect';
+		      option.value = obj.today; // 선택된 값으로 사용할 식별자
+		      option.textContent = obj.today; // 사용자에게 표시될 텍스트
+			  console.log(option);
+		      subjectse.appendChild(option); // 옵션을 <select> 요소에 추가
+		      });
+		    },
+		    error: function(error) {
+		      console.error(error);
+		    }
+		  });
+		};
+
+  changeSelection();
+
+	function TodayChange(){
+		const today = $("#subjectse option:selected").val();
+		console.log(today);
+	}
+	
+	TodayChange();
 </script>
 <style>
 #calendarBox {
@@ -197,7 +220,7 @@
 </style>
 
 <style>
-#subjectse {
+#subjectSelect, #subjectse {
    width: 465px;
    height: 40px;
 }
@@ -205,13 +228,10 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -225,7 +245,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -432,26 +452,23 @@
                   <div class="modal-content">
                      <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add ToDay Schedule</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                           aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span>
                         </button>
                      </div>
                      <form action="today" method="Post" th:object="${TodaySchedule}" id="today">
                      <div class="modal-body">
                         <div class="form-group">
-                           <label for="taskId" class="col-form-label">Subject</label> 
-                           <select id="subjectse" name="subject" onchange="changeSeletion()">
+                           <label for="subjectSelect" class="col-form-label">Subject</label> 
+                           <select id="subjectSelect" name="subject" onchange="changeSelection()">
                               <th:block th:each="sub : ${subject}">                        
                                  <option th:name="${subject}" th:value="${sub}" th:text="${sub}"></option>
                               </th:block>
                            </select><br>
-                           <label for="taskId" class="col-form-label">Start Date</label> 
-                           <select id="subjectse">
-                                 <option>Choice Date</option>
-                              <th:block th:each="today :	 ${today}">
-                                 <option th:value="${today.today}" th:text="${today.today}"></option>
-                              </th:block>
+                           <input type="hidden" id="todaySelection" name="todaySelection"/>
+                           <label for="subjectse" class="col-form-label">Start Date</label> 
+                           <select id="subjectse" name="today" onchange="TodayChange(this.value)">
+                           
                            </select><br>
                            <label for="taskId" class="col-form-label">Today Start Time</label> 
                            <input type="time" class="form-control" id="calendar_start_time" name="start_time">
