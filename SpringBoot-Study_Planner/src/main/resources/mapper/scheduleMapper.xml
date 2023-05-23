@@ -78,4 +78,31 @@
     <select id="findBySubject" resultType="TodayScheduleResult">
     	select * from today_schedule where subject = #{subject}
     </select>
+    
+    <select id="selectAllSchedule" resultType="CalendarVO">
+    	select title, start_date as start, end_date as end from Schedule where member_id = #{member_id};
+    </select>
+    
+    <insert id="saveEvents">
+    <selectKey keyProperty="schedule_num" resultType="long" order="BEFORE">
+    	select seq_event.nextval from dual
+    </selectKey>
+    	insert into events (
+    		event_id,
+    		title,
+    		subject,
+    		member_id,
+    		start,
+    		end,
+    		allDay
+    	) values (
+    		#{event_id},
+    		#{title},
+    		#{subject},
+    		#{member_id},
+    		#{start},
+    		#{end},
+    		#{allDay}
+    	)
+    </insert>
 </mapper>

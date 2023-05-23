@@ -41,7 +41,25 @@
         		headerToolbar : {
         			center: 'addEventButton addTodayButton', // headerToolbar에 버튼을 추가
                 },
-        		customButtons : {
+        		
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                customButtons : {
         			addEventButton : {
         				 text : "Add Schedule",  // 버튼 내용
                          click : function(){ // 버튼 클릭 시 이벤트 추가
@@ -63,18 +81,18 @@
                                      alert("Please Add subject");
                                  }else if(start_date == "" || end_date ==""){
                                      alert("Please Add Date");
-                                 }else if(new Date(end_date)- new Date(start_date) < 0){ // date 타입으로 변경 후 확인
+                                 }else if(new Date(end_date) - new Date(start_date) < 0){ // date 타입으로 변경 후 확인
                                      alert("End Date is Before Start Date");
                                  }else{ // 정상적인 입력 시
                                 	var start = start_date + 'T' + '00:00:00';
                      				var end = end_date + 'T' + '24:00:00';
                                      var obj = {
-                                    		 "title" : content,
-                                    		    "subject" : subject,
-                                    		    "start" : start,
-                                    		    "end" : end,
-                                      		   "allDay": true,
-                                      			"backgroundColor": randomColor
+                                    		"title" : content,
+                                    		"subject" : subject,
+                                    		"start" : start,
+                                    		"end" : end,
+                                      		"allDay": true,
+                                      		"backgroundColor": randomColor
                                      }//전송할 객체 생성
                                     calendar.addEvent(obj);
                      				saveEventsToStorage();
@@ -110,14 +128,13 @@
                                      var obj = {
                                          "subject" : subject,
                                          "today" : today,
-                                         "start_time" : start_time,
-                                         "end_time" : end_time
+                                         "start" : start_time,
+                                         "end" : end_time
                                      }//전송할 객체 생성
-                                     calendar.addEvent(obj);
+                                    calendar.addEvent(obj);
                      				saveEventsToStorage();
-
-                                 }             				
-                                 $("#calendarModal").modal("hide"); //서버로 해당 객체를 전달해서 DB 연동 가능
+                     				$("#calendarModal").modal("hide"); //서버로 해당 객체를 전달해서 DB 연동 가능
+                                 }             		
                                  $('#today').submit();
                              });
                          }
@@ -133,18 +150,17 @@
                 	},
         		
                  
-                 editable: false, // false로 변경 시 draggable 작동 x 
-                 displayEventTime: false // 시간 표시 
+                 editable: true, // false로 변경 시 draggable 작동 x 
+                 displayEventTime: true // 시간 표시 
              });
 
         	function saveEventsToStorage() {
         	    var events = calendar.getEvents().map(function(event) {
         	        return {
-        	            title : event.title,
-        	            start : event.start,
-        	            end : event.end,
-        	            allDay : event.allDay,
-        	            subject : event.extendedProps.subject
+        	            title : event.subject,
+        	            today : event.today,
+        	            start : event.start_time,
+        	            end : event.end_time,
         	        };
         	    });
         	    localStorage.setItem('calendarEvents', JSON.stringify(events));
@@ -162,8 +178,7 @@
         	        return [];
         	    }
         	}
-
-
+        	
         	calendar.render();
         });
     </script>

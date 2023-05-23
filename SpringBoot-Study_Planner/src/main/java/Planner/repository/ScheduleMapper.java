@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
+
+import Planner.Model.schedule.CalendarVO;
 import Planner.Model.schedule.Schedule;
 import Planner.Model.schedule.TodaySchedule;
 import Planner.Model.schedule.TodayScheduleForm;
@@ -24,4 +26,7 @@ public interface ScheduleMapper {
    
    public void updateToday(TodayScheduleForm todayScheduleForm);
    public List<TodayScheduleResult> findBySubject(String subject);
+   
+   public List<CalendarVO> selectAllSchedule(String member_id);
+   public void saveEvents(CalendarVO calendarVO);
 }
